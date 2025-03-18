@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-store, no-cache, must-revalidate, max-age=0"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>To Do List - Dashboard</title>
+    <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/Styles/libs/fonts-googleapis.css" />
+    <link rel="stylesheet" href="../Styles/main-content.css" />
+    <link rel="stylesheet" href="../Styles/Task.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/Styles/libs/highlight.css" />
+    <script defer="defer" src="/js/main-content.js"></script>
+    <script src="/js/libs/highlight.js"></script>
+    <script src="/js/libs/marked-min.js"></script>
+    <script src="/js/libs/sweetalert2.js"></script>
+    <script src="/js/libs/html2canvas.js"></script>
+    <script src="/js/libs/tailwindcss.js"></script>
+  </head>
+  <body class="text-gray-100">
+    <div
+      id="fixed-header"
+      class="fixed top-0 left-0 w-full h-16 z-1000 flex items-center justify-center text-white font-bold text-lg hidden"
+    ></div>
+    <div class="flex h-screen" id="content">
+      <aside
+        class="w-64 sidebar p-5 flex flex-col justify-between"
+        id="sidebar"
+      >
+        <div>
+          <h2 class="text-xl font-bold text-center mb-6 text-accent">
+            📌 Assistify
+          </h2>
+          <nav>
+            <ul class="space-y-3">
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center bg-gray-700 text-accent transition"
+                onclick='window.location.href="./TDL.html"'
+              >
+                <i class="fas fa-tasks mr-3 text-accent"></i> TDL
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./PJS.html"'
+              >
+                <i class="fas fa-calendar-check mr-3 text-accent"></i> PJS
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./ProgressTDL.html"'
+              >
+                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress TDL
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./ProgressPJS.html"'
+              >
+                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress PJS
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div>
+          <ul class="space-y-3">
+            <li
+              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+              onclick='window.location.href="./account.html"'
+            >
+              <i class="fas fa-user-circle mr-3 text-accent"></i> Profile
+            </li>
+            <li
+              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+              id="logout-btn"
+            >
+              <a class="flex items-center w-full"
+                ><i class="fas fa-sign-out-alt mr-3 text-accent"></i> Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <main class="flex-1 p-8 overflow-y-auto relative min-h-screen">
+        <div
+          id="loading-spinner"
+          class="fixed inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm hidden"
+        >
+          <div
+            class="w-12 h-12 border-4 border-gray-700 border-t-blue-600 rounded-full animate-spin relative"
+          >
+            <div
+              class="absolute inset-0 border-2 border-transparent border-t-accent rounded-full animate-spin-slow"
+            ></div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center mb-8">
+          <button id="menu-toggle" class="lg:hidden text-gray-100">
+            <i class="fa-solid fa-bars-staggered"></i>
+          </button>
+          <h1 class="text-2xl font-bold ml-4" id="page-title">
+            <i class="fa-solid fa-list-check" style="color: #ffd43b"></i> To-Do
+            List
+          </h1>
+          <div class="flex items-center space-x-4">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search tasks..."
+              class="px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+            <select
+              id="filter-and-sort"
+              class="px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            >
+              <option value="all">All Statuses</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+              <option value="overdue">Overdue</option>
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+            <button
+              id="new-task-btn"
+              class="btn-primary px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition text-sm"
+            >
+              <i class="fas fa-plus mr-2"></i> New Task
+            </button>
+          </div>
+        </div>
+        <div id="task-list" class="space-y-4"></div>
+        <div
+          class="flex justify-center items-center h-[60vh] xl:h-[80vh] hidden"
+          id="no-tasks"
+        >
+          <img
+            src="/photo/to-do-list.png"
+            alt="No tasks added yet"
+            class="max-w-xs"
+          />
+        </div>
+        <div class="flex justify-center mt-6">
+          <button
+            id="load-more-btn"
+            onclick="loadMoreTasks()"
+            class="hidden px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 ease-in-out shadow-sm"
+          >
+            Load More Tasks
+          </button>
+        </div>
+      </main>
+    </div>
+    <div
+      id="task-modal"
+      class="flex fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center"
+    >
+      <div class="bg-gray-800 p-6 rounded-lg w-96">
+        <h2 class="text-xl font-bold mb-4" id="modal-title">Add New Task</h2>
+        <form id="task-form">
+          <input type="hidden" id="task-id" />
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Task Name</label>
+            <input
+              type="text"
+              id="task-name"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="relative mb-4">
+            <label
+              for="task-description"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >Task Description</label
+            >
+            <div class="relative">
+              <textarea
+                id="task-description"
+                class="w-full h-20 px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none resize-none transition-all duration-300"
+                placeholder="Write your task description..."
+              ></textarea>
+              <button
+                type="button"
+                id="expand-textarea-btn"
+                class="absolute top-0 right-4 hover:text-white hover:scale-110 p-2 rounded-full focus:outline-none transition duration-200"
+                title="Expand"
+              >
+                <i class="fas fa-expand text-lg"></i>
+              </button>
+            </div>
+          </div>
+          <div
+            id="fullscreen-modal"
+            class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-[9999] transition-all duration-500"
+          >
+            <div
+              class="relative bg-gray-800 text-white w-[90%] max-w-4xl h-[90%] rounded-lg shadow-2xl overflow-hidden transform scale-75 opacity-0 transition-all duration-500"
+              id="modal-content"
+            >
+              <div class="flex justify-between items-center bg-gray-900 p-4">
+                <h2 class="text-lg font-semibold">Edit Task Description</h2>
+                <button
+                  type="button"
+                  id="close-fullscreen-btn"
+                  class="text-gray-400 hover:text-white p-2 rounded-full focus:outline-none transition duration-200"
+                  title="Close"
+                >
+                  <i class="fas fa-times text-2xl"></i>
+                </button>
+              </div>
+              <div class="p-4 h-full">
+                <textarea
+                  id="fullscreen-textarea"
+                  class="w-full h-[85%] p-3 bg-gray-700 text-white rounded-lg focus:outline-none resize-none"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Due Date</label>
+            <input
+              type="date"
+              id="task-due-date"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2"
+              >Tags (use , like tag1, tag2)</label
+            >
+            <input
+              type="text"
+              id="task-tags"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            />
+          </div>
+          <div class="flex justify-end space-x-3">
+            <button
+              type="button"
+              id="cancel-btn"
+              class="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-700"
+            >
+              Cancel
+            </button>
+            <button
+              id="saveTaskButton"
+              type="submit"
+              class="px-4 py-2 bg-accent rounded-lg hover:bg-green-500"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      id="review-modal"
+      class="fixed inset-0 bg-black/70 hidden flex justify-center items-center p-5 z-50 backdrop-blur-sm"
+    >
+      <div
+        id="review-sheet"
+        class="w-full max-w-3xl bg-[#1e293b] shadow-2xl rounded-xl overflow-hidden flex flex-col border border-gray-700"
+        style="font-family: Inter, sans-serif; max-height: 90vh"
+      >
+        <div
+          class="flex flex-col justify-between bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white px-6 py-4 rounded-t-xl"
+        >
+          <span
+            id="review-task-name"
+            class="text-lg font-semibold truncate"
+          ></span>
+          <div class="flex items-center text-xs opacity-80 mt-1">
+            <span>Due Date:</span>
+            <span id="review-task-date" class="ml-1"></span>
+          </div>
+        </div>
+        <div
+          class="p-6 overflow-y-auto flex-1 space-y-6 bg-[#141414]"
+          style="max-height: calc(90vh - 140px)"
+        >
+          <div>
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide">
+              Description
+            </h3>
+            <div
+              class="relative bg-[#0f172a] rounded-lg mt-2 p-4 text-sm border border-gray-700"
+            >
+              <div
+                id="review-task-desc"
+                class="leading-relaxed text-white overflow-x-auto"
+              ></div>
+              <button
+                class="absolute top-2 right-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold py-1 px-2 rounded transition"
+                onclick="copyDescription()"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 bg-[#1e293b] border-t border-gray-700 rounded-b-xl">
+          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide">
+            Tags
+          </h3>
+          <div id="review-task-tags" class="flex flex-wrap gap-2 mt-2"></div>
+          <div class="flex justify-end">
+            <button
+              onclick="saveModalAsHTML()"
+              class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm exclude-from-export transition duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2"
+            >
+              <i class="fas fa-save"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/showAlert.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

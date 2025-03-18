@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Assistify - Task Management & Project Scheduling</title>
+    <meta
+      name="description"
+      content="Easily create, organize, and prioritize tasks. Plan projects efficiently and track progress with analytics and reports."
+    />
+    <meta
+      name="keywords"
+      content="task management, project scheduling, progress tracking, productivity, to-do list"
+    />
+    <meta name="author" content="Assistify" />
+    <meta
+      property="og:title"
+      content="Assistify - Task Management & Project Scheduling"
+    />
+    <meta
+      property="og:description"
+      content="Manage your tasks efficiently, schedule projects, and track progress effortlessly."
+    />
+    <meta property="og:image" content="/photo/logo.png" />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Assistify - Task Management & Project Scheduling"
+    />
+    <meta
+      name="twitter:description"
+      content="Easily create, organize, and prioritize tasks. Plan projects efficiently and track progress with analytics."
+    />
+    <meta name="twitter:image" content="/photo/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <script src="/js/libs/tailwindcss.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/Styles/assistify.css" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/photo/logo.png" />
+    <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar fixed w-full top-0 z-50 bg-transparent py-4 px-6">
+      <div class="container mx-auto flex items-center justify-between">
+        <a href="#" class="text-2xl font-bold text-blue-400">Assistify</a>
+        <div>
+          <a
+            href="./authentication/Login.html"
+            class="px-4 py-2 text-sm font-semibold btn-primary rounded-lg hover:bg-blue-600 transition-all"
+            >Login</a
+          >
+        </div>
+      </div>
+    </nav>
+    <header class="h-screen flex items-center justify-center text-center px-6">
+      <div class="max-w-3xl">
+        <h1 class="text-5xl font-bold mb-6">
+          Simplify Your Workflow with Assistify
+        </h1>
+        <p class="text-lg mb-8">
+          Manage tasks, track progress, and supercharge your productivity with
+          ease.
+        </p>
+        <a
+          href="./pages/TDL.html"
+          class="px-6 py-3 text-lg font-semibold btn-primary rounded-lg hover:bg-blue-600 transition-all"
+          >Try Assistify</a
+        >
+      </div>
+    </header>
+    <div class="wave-divider">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+    <section class="py-20 bg-gray-800">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Why Choose Assistify?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="card p-6 rounded-lg">
+            <i class="fas fa-tasks text-4xl text-blue-400 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-3">Task Management</h3>
+            <p>
+              Easily create, organize, and prioritize your tasks with our
+              intuitive task manager.
+            </p>
+          </div>
+          <div class="card p-6 rounded-lg">
+            <i class="fas fa-calendar-alt text-4xl text-green-400 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-3">Project Scheduling</h3>
+            <p>
+              Plan and track your projects with our powerful scheduling tools.
+            </p>
+          </div>
+          <div class="card p-6 rounded-lg">
+            <i class="fas fa-chart-line text-4xl text-purple-400 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-3">Progress Tracking</h3>
+            <p>Monitor your progress with detailed analytics and reports.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="wave-divider rotate-180">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+    <section class="py-20">
+      <div class="container mx-auto text-center px-4">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">About Assistify</h2>
+        <p class="text-base md:text-lg mb-8">
+          Assistify is designed to help you stay organized, productive, and
+          focused. Whether you're managing personal tasks or team projects, our
+          platform provides all the tools you need to succeed.
+        </p>
+        <p class="text-base md:text-lg mb-8">
+          Join thousands of users who have transformed their productivity with
+          Assistify.
+        </p>
+        <a
+          href="./authentication/signup.html"
+          class="px-6 py-3 text-lg font-semibold btn-primary rounded-lg hover:bg-blue-600 transition-all"
+          >Sign Up Now</a
+        >
+      </div>
+    </section>
+    <footer class="bg-gray-800 py-6">
+      <div class="container mx-auto text-center">
+        <div class="mb-4">
+          <a
+            href="mailto:yourname@example.com"
+            class="text-gray-400 mx-3 hover:text-yellow-400"
+            ><i class="fas fa-envelope"></i> </a
+          ><a
+            href="https://www.linkedin.com/in/yourprofile"
+            target="_blank"
+            class="text-gray-400 mx-3 hover:text-blue-400"
+            ><i class="fab fa-linkedin"></i> </a
+          ><a
+            href="https://github.com/yourusername"
+            target="_blank"
+            class="text-gray-400 mx-3 hover:text-white"
+            ><i class="fab fa-github"></i> </a
+          ><a
+            href="https://twitter.com/yourusername"
+            target="_blank"
+            class="text-gray-400 mx-3 hover:text-blue-300"
+            ><i class="fab fa-twitter"></i
+          ></a>
+        </div>
+        <p class="text-gray-400">&copy; 2025 Assistify. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="/js/assistify.js"></script>
+  </body>
+</html>

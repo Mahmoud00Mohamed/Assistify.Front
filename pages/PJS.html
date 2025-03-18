@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-store, no-cache, must-revalidate, max-age=0"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
+    <title>Project & Task Management System</title>
+    <link rel="stylesheet" href="/Styles/main-content.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="/js/libs/tailwindcss.js"></script>
+    <script src="/js/libs/sweetalert2.js"></script>
+    <script defer="defer" src="/js/main-content.js"></script>
+  </head>
+  <body class="text-gray-100">
+    <div
+      id="fixed-header"
+      class="fixed top-0 left-0 w-full h-16 z-1000 flex items-center justify-center text-white font-bold text-lg hidden"
+    ></div>
+    <div class="flex h-screen" id="content">
+      <aside
+        class="w-64 sidebar p-5 flex flex-col justify-between"
+        id="sidebar"
+      >
+        <div>
+          <h2 class="text-xl font-bold text-center mb-6 text-accent">
+            📌 Assistify
+          </h2>
+          <nav>
+            <ul class="space-y-3">
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./TDL.html"'
+              >
+                <i class="fas fa-tasks mr-3 text-accent"></i> TDL
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center bg-gray-700 text-accent transition"
+                onclick='window.location.href="./PJS.html"'
+              >
+                <i class="fas fa-calendar-check mr-3 text-accent"></i> PJS
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./ProgressTDL.html"'
+              >
+                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress TDL
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./ProgressPJS.html"'
+              >
+                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress PJS
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div>
+          <ul class="space-y-3">
+            <li
+              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+              onclick='window.location.href="./account.html"'
+            >
+              <i class="fas fa-user-circle mr-3 text-accent"></i> Profile
+            </li>
+            <li
+              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+              id="logout-btn"
+            >
+              <a class="flex items-center w-full"
+                ><i class="fas fa-sign-out-alt mr-3 text-accent"></i> Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <main class="flex-1 p-8 overflow-y-auto">
+        <div
+          id="loading-spinner"
+          class="fixed inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm hidden"
+        >
+          <div
+            class="w-12 h-12 border-4 border-gray-700 border-t-blue-600 rounded-full animate-spin relative"
+          >
+            <div
+              class="absolute inset-0 border-2 border-transparent border-t-accent rounded-full animate-spin-slow"
+            ></div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center mb-8">
+          <div class="flex items-center">
+            <button id="menu-toggle" class="lg:hidden text-gray-100">
+              <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <h1 class="text-2xl font-bold ml-4" id="page-title">
+              <i class="fa-solid fa-calendar-days" style="color: #ffd43b"></i>
+              Project Schedule
+            </h1>
+          </div>
+          <div class="flex items-center space-x-4">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search tasks..."
+              class="px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+            <select
+              id="filter-importance"
+              class="px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            >
+              <option value="all">All Statuses</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="partially-completed">Partially Completed</option>
+              <option value="on-hold">On Hold</option>
+            </select>
+            <button
+              id="new-project-btn"
+              class="btn-primary px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition text-sm"
+            >
+              <i class="fas fa-plus mr-2"></i> New Project
+            </button>
+          </div>
+        </div>
+        <div id="project-list" class="space-y-4"></div>
+        <div
+          class="flex justify-center items-center h-[60vh] xl:h-[80vh] hidden"
+          id="no-tasks"
+        >
+          <img
+            src="/photo/undraw_online.png"
+            alt="No project added yet"
+            class="max-w-xs"
+          />
+        </div>
+      </main>
+    </div>
+    <div
+      id="project-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center"
+    >
+      <div class="bg-gray-800 p-6 rounded-lg w-96">
+        <h2 class="text-xl font-bold mb-4" id="modal-title">Add New Project</h2>
+        <form id="project-form">
+          <input type="hidden" id="project-id" />
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Project Name</label>
+            <input
+              type="text"
+              id="project-name"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2"
+              >Project Description</label
+            >
+            <textarea
+              id="project-description"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            ></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Start Date</label>
+            <input
+              type="date"
+              id="project-start-date"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">End Date</label>
+            <input
+              type="date"
+              id="project-end-date"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4 hidden">
+            <label class="block text-sm font-medium mb-2">Status</label>
+            <select
+              id="project-status"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            >
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="on-hold">On Hold</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="not-started">Not Started</option>
+            </select>
+          </div>
+          <div class="flex justify-end space-x-3">
+            <button
+              type="button"
+              id="cancel-btn"
+              class="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-700 text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-accent rounded-lg hover:bg-green-500 text-sm"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      id="task-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center"
+    >
+      <div class="bg-gray-800 p-6 rounded-lg w-96">
+        <h2 class="text-xl font-bold mb-4" id="task-modal-title">
+          Add New Task
+        </h2>
+        <form id="task-form">
+          <input type="hidden" id="task-id" />
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Task Name</label>
+            <input
+              type="text"
+              id="task-name"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2"
+              >Task Description</label
+            >
+            <textarea
+              id="task-description"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            ></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Assigned To</label>
+            <input
+              type="text"
+              id="task-assigned"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Start Date</label>
+            <input
+              type="date"
+              id="task-start-date"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">End Date</label>
+            <input
+              type="date"
+              id="task-end-date"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Status</label>
+            <select
+              id="task-status"
+              class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none"
+            >
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="on-hold">On Hold</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="not-started">Not Started</option>
+            </select>
+          </div>
+          <div class="flex justify-end space-x-3">
+            <button
+              type="button"
+              id="task-cancel-btn"
+              class="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-700 text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-accent rounded-lg hover:bg-green-500 text-sm"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <head>
+      <link rel="stylesheet" href="../Styles/Schedule.css" />
+    </head>
+    <script></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/showAlert.js"></script>
+    <script src="/js/toggle.js"></script>
+    <script src="/js/main/auth.js"></script>
+    <script src="/js/main/api.js"></script>
+    <script src="/js/PJS.js"></script>
+    <script src="/js/main/sync.js"></script>
+    <script src="/js/main/authEvents.js"></script>
+    <script src="/js/main/logoutButton.js"></script>
+  </body>
+</html>

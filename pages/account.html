@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-store, no-cache, must-revalidate, max-age=0"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
+    <title>Account Settings</title>
+    <script src="/js/libs/tailwindcss.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="/js/libs/sweetalert2.js"></script>
+    <style>
+      .navbar {
+        transition: all 0.3s ease;
+      }
+      .navbar.scrolled {
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-200">
+    <nav class="navbar fixed w-full top-0 z-50 bg-transparent py-4 px-6">
+      <div class="container mx-auto flex items-center justify-between">
+        <a href="#" class="text-2xl font-bold text-blue-400">Assistify</a>
+        <div>
+          <a
+            href="./TDL.html"
+            class="px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700 hover:opacity-90"
+            >Go Back</a
+          >
+        </div>
+      </div>
+    </nav>
+    <section
+      id="user-info"
+      class="section-info bg-gray-800 p-5 rounded-lg shadow-md max-w-3xl mx-auto mt-20"
+    >
+      <div class="profile-wrapper flex flex-col md:flex-row gap-6">
+        <div class="profile-image-section flex flex-col items-center">
+          <img
+            id="unique-profile-pic"
+            src=""
+            alt="Profile Picture"
+            class="w-28 h-28 rounded-full cursor-pointer border-4 border-blue-500 hover:border-blue-400 transition-all transform hover:scale-105 shadow-lg"
+            onclick="expandUniqueImage()"
+          />
+        </div>
+        <div class="user-info-section flex-1 space-y-5">
+          <div>
+            <label
+              for="user-first-name"
+              class="block text-sm font-medium text-gray-400"
+              >First Name</label
+            >
+            <div class="input-wrapper relative mt-1">
+              <input
+                type="text"
+                id="user-first-name"
+                class="input-field w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                value=""
+                disabled="disabled"
+              />
+              <button
+                onclick='clearInput("user-first-name")'
+                class="btn-clear absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 hidden"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label
+              for="user-last-name"
+              class="block text-sm font-medium text-gray-400"
+              >Last Name</label
+            >
+            <div class="input-wrapper relative mt-1">
+              <input
+                type="text"
+                id="user-last-name"
+                class="input-field w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                value=""
+                disabled="disabled"
+              />
+              <button
+                onclick='clearInput("user-last-name")'
+                class="btn-clear absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 hidden"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label
+              for="user-username"
+              class="block text-sm font-medium text-gray-400"
+              >Username</label
+            >
+            <div class="input-wrapper relative mt-1">
+              <input
+                type="text"
+                id="user-username"
+                class="input-field w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                value=""
+                disabled="disabled"
+                oninput="checkUsernameAvailability()"
+              />
+              <span
+                id="username-status"
+                class="status-icon absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hidden"
+                ><i class="fa-solid fa-circle-notch fa-spin"></i
+              ></span>
+            </div>
+          </div>
+          <div>
+            <label
+              for="user-email"
+              class="block text-sm font-medium text-gray-400"
+              >Email</label
+            >
+            <div class="input-wrapper relative mt-1">
+              <input
+                type="email"
+                id="user-email"
+                class="input-field w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md cursor-not-allowed"
+                value=""
+                disabled="disabled"
+              />
+              <button
+                onclick='clearInput("user-email")'
+                class="btn-clear absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 hidden"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+          <p class="text-info text-xs text-gray-400">
+            Update your profile information below.
+          </p>
+        </div>
+      </div>
+      <div class="mt-5 flex gap-3">
+        <button
+          onclick="enableEditing()"
+          class="btn-edit bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded-md text-sm transition-all"
+        >
+          Edit Profile
+        </button>
+        <button
+          onclick="btnSave()"
+          class="btn-save bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-md text-sm transition-all hidden"
+        >
+          Save Changes
+        </button>
+        <button
+          onclick="btnCancel()"
+          class="btn-cancel bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-sm transition-all hidden"
+        >
+          Cancel
+        </button>
+      </div>
+    </section>
+    <div
+      id="unique-image-popup"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center opacity-0 scale-90 transition-all duration-500 ease-out pointer-events-none"
+      onclick="closeUniquePopup(event)"
+    >
+      <div
+        id="popup-content"
+        class="bg-gray-800 p-5 rounded-lg shadow-2xl transform scale-90 opacity-0 transition-all duration-500 ease-out"
+      >
+        <img
+          id="unique-popup-image"
+          src=""
+          alt="Enlarged Image"
+          class="max-w-full max-h-80 rounded-lg shadow-xl border-4 border-gray-700"
+        />
+      </div>
+    </div>
+    <section
+      id="account-settings"
+      class="section-settings bg-gray-800 p-5 rounded-lg shadow-md max-w-3xl mx-auto mt-6 mb-40"
+    >
+      <div class="profile-settings">
+        <h2 class="text-lg font-semibold text-blue-400 mb-4">
+          <i class="fas fa-cog mr-2"></i> Account Settings
+        </h2>
+        <form id="password-form" class="mb-5">
+          <h3 class="text-md font-medium text-gray-300 mb-3">
+            Change Password
+          </h3>
+          <div class="space-y-3">
+            <div>
+              <label
+                for="old-password"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-lock mr-2"></i> Old Password:</label
+              >
+              <input
+                type="password"
+                id="old-password"
+                name="old-password"
+                autocomplete="off"
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="new-password"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-lock mr-2"></i> New Password:</label
+              >
+              <input
+                type="password"
+                id="new-password"
+                autocomplete="off"
+                name="new-password"
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="confirm-password"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-lock mr-2"></i> Confirm Password:</label
+              >
+              <input
+                type="password"
+                id="confirm-password"
+                autocomplete="off"
+                name="confirm-password"
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              id="btn-update-password"
+              class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-md text-sm transition-all"
+            >
+              <i class="fas fa-check-circle mr-2"></i> Update Password
+            </button>
+          </div>
+        </form>
+        <hr class="my-5 border-gray-700" />
+        <form id="email-form">
+          <h3 class="text-md font-medium text-gray-300 mb-3">Update Email</h3>
+          <div class="space-y-3">
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-envelope mr-2"></i> New Email:</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                required
+              />
+            </div>
+            <div class="code-field flex gap-2">
+              <input
+                type="text"
+                id="verification-code"
+                name="verificationCode"
+                placeholder="Enter Verification Code"
+                class="code-input flex-1 px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              />
+              <button
+                type="button"
+                id="send-verification-code"
+                class="send-code-button bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-md text-sm transition-all"
+              >
+                Send Code
+              </button>
+            </div>
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-lock mr-2"></i> Password:</label
+              >
+              <input
+                type="password"
+                id="password"
+                autocomplete="off"
+                name="password"
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                required
+              />
+            </div>
+            <div
+              id="message-box"
+              class="message-box hidden fixed top-4 right-4 z-50 max-w-sm"
+            ></div>
+            <button
+              type="submit"
+              id="email-button"
+              class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-md text-sm transition-all"
+            >
+              <i class="fas fa-check-circle mr-2"></i> Update Email
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <div class="relative flex items-center justify-center my-40">
+      <div class="w-full border-t border-gray-700"></div>
+      <span
+        class="absolute bg-gray-900 px-4 py-1 text-gray-300 text-sm font-semibold border border-gray-600 rounded-md flex items-center gap-2 shadow-md"
+        ><i class="fas fa-exclamation-circle text-yellow-400"></i> Danger
+        Zone</span
+      >
+    </div>
+    <section
+      id="delete-account"
+      class="section-settings bg-gray-800 p-5 rounded-lg shadow-md max-w-3xl mx-auto mt-6 mb-40 border border-red-600"
+    >
+      <div class="delete-account-settings">
+        <h2 class="text-lg font-semibold text-red-400 mb-4">
+          <i class="fas fa-exclamation-triangle mr-2" aria-hidden="true"></i>
+          Delete Account
+        </h2>
+        <form id="delete-account-form">
+          <h3 class="text-md font-medium text-gray-300 mb-3">
+            Warning: This action is irreversible!
+          </h3>
+          <div class="space-y-3">
+            <div>
+              <label
+                for="delete-password"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-lock mr-2"></i> Enter Your Password:</label
+              >
+              <input
+                type="password"
+                id="delete-password"
+                name="delete-password"
+                autocomplete="off"
+                placeholder="Enter your password"
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-red-500 focus:ring-2 focus:ring-red-500 outline-none transition-all"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="delete-confirmation"
+                class="block text-sm font-medium text-gray-400 mb-2"
+                ><i class="fas fa-keyboard mr-2"></i> Type "DELETE" to
+                confirm:</label
+              >
+              <input
+                type="text"
+                id="delete-confirmation"
+                name="delete-confirmation"
+                placeholder='Type "DELETE" here'
+                class="w-full px-3 py-1.5 bg-gray-700 text-gray-200 border border-gray-600 rounded-md focus:border-red-500 focus:ring-2 focus:ring-red-500 outline-none transition-all"
+                required
+              />
+              <span id="confirmation-error" class="text-sm text-red-500 hidden"
+                >Please type "DELETE" to confirm.</span
+              >
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="confirm-delete"
+                name="confirm-delete"
+                class="form-checkbox h-4 w-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"
+                required
+              />
+              <span class="ml-2 text-sm text-gray-400"
+                >I understand that this action cannot be undone. </span
+              ><span id="checkbox-error" class="text-sm text-red-500 hidden"
+                >Please check this box to confirm.</span
+              >
+            </div>
+            <button
+              type="submit"
+              id="btn-delete-account"
+              class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled="disabled"
+            >
+              <i class="fas fa-trash-alt mr-2"></i> Delete Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <script src="/js/showAlert.js"></script>
+    <script src="/js/main/auth.js"></script>
+    <script src="/js/main/api.js"></script>
+    <script src="/js/main/authEvents.js"></script>
+    <script src="/js/data.js"></script>
+  </body>
+</html>

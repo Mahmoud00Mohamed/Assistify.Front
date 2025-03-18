@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-store, no-cache, must-revalidate, max-age=0"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
+    <title>Progress Tracking</title>
+    <link rel="stylesheet" href="/Styles/libs/fonts-googleapis.css" />
+    <link rel="stylesheet" href="../Styles/main-content.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="/js/libs/tailwindcss.js"></script>
+    <script src="/js/libs/chart.js"></script>
+    <script src="/js/libs/sweetalert2.js"></script>
+    <script defer="defer" src="/js/main-content.js"></script>
+    <style>
+      .status-pending {
+        color: #fbbf24;
+      }
+      .status-in-progress {
+        color: #3b82f6;
+      }
+      .status-completed {
+        color: #10b981;
+      }
+      .status-overdue {
+        color: #ef4444;
+      }
+      .accordion-header {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .accordion-header:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .accordion-content.open {
+        max-height: 500px;
+      }
+    </style>
+  </head>
+  <body class="text-gray-100 bg-gray-900">
+    <div class="flex h-screen" id="content">
+      <aside
+        class="w-64 sidebar p-5 flex flex-col justify-between bg-gray-800"
+        id="sidebar"
+      >
+        <div>
+          <h2 class="text-xl font-bold text-center mb-6 text-accent">
+            📌 Assistify
+          </h2>
+          <nav>
+            <ul class="space-y-3">
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./TDL.html"'
+              >
+                <i class="fas fa-tasks mr-3 text-accent"></i> TDL
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./PJS.html"'
+              >
+                <i class="fas fa-calendar-check mr-3 text-accent"></i> PJS
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+                onclick='window.location.href="./ProgressTDL.html"'
+              >
+                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress TDL
+              </li>
+              <li
+                class="py-2 px-4 rounded-lg cursor-pointer flex items-center bg-gray-700 text-accent transition"
+                onclick='window.location.href="./ProgressPJS.html"'
+              >
+                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress PJS
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div>
+          <ul class="space-y-3">
+            <li
+              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+              onclick='window.location.href="./account.html"'
+            >
+              <i class="fas fa-user-circle mr-3 text-accent"></i> Profile
+            </li>
+            <li
+              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
+              id="logout-btn"
+            >
+              <a class="flex items-center w-full"
+                ><i class="fas fa-sign-out-alt mr-3 text-accent"></i> Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <main class="flex-1 p-8 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+          <div class="flex items-center">
+            <button id="menu-toggle" class="lg:hidden text-gray-100">
+              <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <h1 class="text-2xl font-bold ml-4" id="page-title">
+              <i class="fa-solid fa-chart-line" style="color: #ffd43b"></i>
+              Progress Tracking
+            </h1>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Total Projects</h3>
+            <p class="text-3xl font-bold text-accent" id="total-projects">0</p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Completed Tasks</h3>
+            <p class="text-3xl font-bold text-green-500" id="completed-tasks">
+              0
+            </p>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-2">Overdue Tasks</h3>
+            <p class="text-3xl font-bold text-red-500" id="overdue-tasks">0</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-4">Project Progress</h3>
+            <canvas id="progressChart"></canvas>
+          </div>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-bold mb-4">Task Status Distribution</h3>
+            <canvas id="taskStatusChart"></canvas>
+          </div>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-lg font-bold mb-4">Tasks Details</h3>
+          <div id="projects-accordion"></div>
+        </div>
+      </main>
+    </div>
+    <style></style
+    ><head>
+      <link rel="stylesheet" href="../Styles/Task.css" />
+    </head>
+    <script src="/js/showAlert.js"></script>
+    <script src="/js/ProgressPJS.js"></script>
+    <script src="/js/toggle.js"></script>
+    <script src="/js/main/auth.js"></script>
+    <script src="/js/main/api.js"></script>
+    <script src="/js/main/authEvents.js"></script>
+    <script src="/js/main/logoutButton.js"></script>
+  </body>
+</html>
