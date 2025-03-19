@@ -3,7 +3,8 @@
 // auth.js
 
 // auth.js
-const apiBaseUrl = "http://localhost:3002/api";
+// const apiBaseUrl = "http://localhost:3002/api";
+const apiBaseUrl = "https://assistify-back.onrender.com/api";
 
 var accessToken = localStorage.getItem("accessToken");
 var refreshTimeout = null;

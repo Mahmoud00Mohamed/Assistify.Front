@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // توجيه المستخدم إلى صفحة تسجيل الدخول
-    window.location.href = "../assistify.html";
+    window.location.href = "/index.html";
   }
 
   // 📢 الاستماع لرسالة تسجيل الخروج من التابات الأخرى

@@ -1,4 +1,3 @@
-// const apiBaseUrl = "https://assistify-back.onrender.com/api";
 const taskList = document.getElementById("task-list");
 const noTasksDiv = document.getElementById("no-tasks");
 const searchInput = document.getElementById("search-input");

@@ -664,7 +664,7 @@ document.addEventListener("DOMContentLoaded", function () {
       sessionStorage.clear();
 
       setTimeout(() => {
-        window.location.href = "/frontend/assistify.html";
+        window.location.href = "/index.html";
       }, 1000);
     } catch (err) {
       Swal.fire({
