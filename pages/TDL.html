@@ -34,57 +34,95 @@
     ></div>
     <div class="flex h-screen" id="content">
       <aside
-        class="w-64 sidebar p-5 flex flex-col justify-between"
+        class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-gray-200 transition-transform duration-300 ease-in-out md:relative md:shadow-lg flex flex-col h-screen sidebar"
         id="sidebar"
       >
-        <div>
-          <h2 class="text-xl font-bold text-center mb-6 text-accent">
-            📌 Assistify
-          </h2>
-          <nav>
-            <ul class="space-y-3">
-              <li
-                class="py-2 px-4 rounded-lg cursor-pointer flex items-center bg-gray-700 text-accent transition"
-                onclick='window.location.href="./TDL.html"'
-              >
-                <i class="fas fa-tasks mr-3 text-accent"></i> TDL
-              </li>
-              <li
-                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
-                onclick='window.location.href="./PJS.html"'
-              >
-                <i class="fas fa-calendar-check mr-3 text-accent"></i> PJS
-              </li>
-              <li
-                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
-                onclick='window.location.href="./ProgressTDL.html"'
-              >
-                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress TDL
-              </li>
-              <li
-                class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
-                onclick='window.location.href="./ProgressPJS.html"'
-              >
-                <i class="fas fa-chart-line mr-3 text-accent"></i> Progress PJS
-              </li>
-            </ul>
-          </nav>
+        <!-- Logo Section -->
+        <div class="flex items-center px-6 py-4 border-b border-gray-800">
+          <img
+            src="/photo/logo.png"
+            alt="A"
+            class="h-8 w-auto"
+            id="logo-Section"
+          />
+          <span class="text-xl font-semibold text-orange-400">ssistify</span>
         </div>
-        <div>
-          <ul class="space-y-3">
-            <li
-              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
-              onclick='window.location.href="./account.html"'
-            >
-              <i class="fas fa-user-circle mr-3 text-accent"></i> Profile
-            </li>
-            <li
-              class="py-2 px-4 rounded-lg cursor-pointer flex items-center hover:bg-gray-700 transition hover:text-accent"
-              id="logout-btn"
-            >
-              <a class="flex items-center w-full"
-                ><i class="fas fa-sign-out-alt mr-3 text-accent"></i> Logout</a
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 px-3 py-4 overflow-y-auto">
+          <ul class="space-y-1">
+            <li>
+              <a
+                href="./TDL.html"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md bg-gray-800 text-blue-400 transition-all duration-200 ease-in-out group"
               >
+                <i
+                  class="fas fa-tasks w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                ></i>
+                <span class="ml-3">TDL</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="./PJS.html"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
+              >
+                <i
+                  class="fas fa-calendar-check w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                ></i>
+                <span class="ml-3">PJS</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="./ProgressTDL.html"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
+              >
+                <i
+                  class="fas fa-chart-line w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                ></i>
+                <span class="ml-3">Progress TDL</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="./ProgressPJS.html"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
+              >
+                <i
+                  class="fas fa-chart-line w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                ></i>
+                <span class="ml-3">Progress PJS</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Bottom Section (Pinned to Bottom) -->
+        <!-- Bottom Section (Pinned to Bottom) -->
+        <div class="mt-auto px-3 py-4 border-t border-gray-800">
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="./account.html"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
+              >
+                <i
+                  class="fas fa-user-circle w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                ></i>
+                <span class="ml-3">Profile</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
+                id="logout-btn"
+              >
+                <i
+                  class="fas fa-sign-out-alt w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
+                ></i>
+                <span class="ml-3">Logout</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -107,8 +145,8 @@
             <i class="fa-solid fa-bars-staggered"></i>
           </button>
           <h1 class="text-2xl font-bold ml-4" id="page-title">
-            <i class="fa-solid fa-list-check" style="color: #ffd43b"></i> To-Do
-            List
+            <i class="fa-solid fa-list-check" style="color: #ffd43b"></i> 𝒯𝑜-𝒟𝑜
+            𝐿𝒾𝓈𝓉
           </h1>
           <div class="flex items-center space-x-4">
             <input

@@ -4,11 +4,6 @@ body {
   /* display: none; */
 }
 
-
-.sidebar {
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-}
-
 .btn-primary {
   background-color: #3b82f6;
   transition: background-color 0.2s ease;
@@ -65,7 +60,9 @@ body {
   #sidebar.active {
     transform: translateX(0);
   }
-
+  #logo-Section{
+    margin-left: 15%;
+  }
   #menu-toggle {
     position: fixed; /* تثبيت الزر في مكانه */
     top: 2%; /* المسافة من الأعلى */
