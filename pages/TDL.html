@@ -374,6 +374,16 @@
         </div>
       </div>
     </div>
+    <script>
+      if (
+        navigator.userAgent.includes("iPhone") ||
+        navigator.userAgent.includes("iPad")
+      ) {
+        window.addEventListener("beforeunload", function () {
+          window.scrollTo(0, 0);
+        });
+      }
+    </script>
     <script src="/js/showAlert.js"></script>
     <script src="/js/app.js"></script>
   </body>

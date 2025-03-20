@@ -391,7 +391,16 @@
     <head>
       <link rel="stylesheet" href="../Styles/Schedule.css" />
     </head>
-    <script></script>
+    <script>
+      if (
+        navigator.userAgent.includes("iPhone") ||
+        navigator.userAgent.includes("iPad")
+      ) {
+        window.addEventListener("beforeunload", function () {
+          window.scrollTo(0, 0);
+        });
+      }
+    </script>
     <script src="/js/api.js"></script>
     <script src="/js/showAlert.js"></script>
     <script src="/js/toggle.js"></script>

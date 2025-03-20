@@ -2,6 +2,9 @@ body {
   font-family: "Inter", sans-serif;
   background-color: #060b10;
 }
+html {
+  scroll-padding-top: 70px; /* ضع ارتفاع الـ header هنا */
+}
 
 .btn-primary {
   background-color: #3b82f6;
