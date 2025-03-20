@@ -1,9 +1,9 @@
 async function toggleTaskCompletion(index) {
   try {
     const task = tasks[index];
-    const checkbox = document.querySelectorAll(".checkbox")[index]; // جلب العنصر
+    const checkbox = document.querySelectorAll(".checkbox")[index];
 
-    // إذا كانت المهمة مكتملة، أطلب التأكيد قبل التغيير
+    // إذا كانت المهمة مكتملة بالفعل، اطلب تأكيدًا لإلغاء الإكمال
     if (task.completed) {
       const isConfirmed = await showAlertConfirm({
         title: "Are you sure?",
@@ -16,7 +16,7 @@ async function toggleTaskCompletion(index) {
       });
 
       if (!isConfirmed) {
-        checkbox.checked = true; // إعادة الحالة السابقة عند الإلغاء
+        checkbox.checked = true;
         return;
       }
     }
@@ -25,7 +25,7 @@ async function toggleTaskCompletion(index) {
     task.completed = !task.completed;
     task.progress = task.completed ? 100 : 0;
 
-    // إرسال التحديث إلى الباك اند
+    // إرسال التحديث إلى الخادم
     const response = await fetchWithAuth(`${apiBaseUrl}/tasks/${task._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -35,41 +35,42 @@ async function toggleTaskCompletion(index) {
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(
-        ` Failed to save the task: ${errorData.message || response.statusText}`
+        `Failed to save the task: ${errorData.message || response.statusText}`
       );
     }
 
-    // عرض إشعار مناسب للحالة الجديدة
+    // عرض رسالة تنبيه بناءً على حالة المهمة
     if (task.completed) {
       Swal.fire({
         title: "🎉 Task Completed!",
-        text: `You have completed the task: "${task.name}".`,
+        text: getRandomMessage(completionMessages),
         icon: "success",
         showConfirmButton: false,
         timer: 3000,
-        backdrop: `rgba(0, 0, 0, 0.4) url("https://i.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center top no-repeat`,
+        backdrop: "rgba(0, 0, 0, 0.4)",
         customClass: {
-          popup: "custom-alert-box",
+          popup: "custom-alert-box confetti-completed",
           title: "custom-alert-title",
           htmlContainer: "custom-alert-text",
         },
       });
+      launchConfetti(); // تشغيل تأثير الكونفيتي
     } else {
       Swal.fire({
         title: "🔓 Task Reopened!",
-        text: `You have reopened the task: "${task.name}".`,
+        text: getRandomMessage(reopenMessages),
         icon: "info",
         timer: 2100,
-        backdrop: `rgba(0, 0, 0, 0.4) url("https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif") center top no-repeat`,
+        backdrop: "rgba(0, 0, 0, 0.4)",
         customClass: {
-          popup: "custom-alert-box",
+          popup: "custom-alert-box confetti-reopened",
           title: "custom-alert-title",
           htmlContainer: "custom-alert-text",
         },
       });
     }
 
-    // تحديث البيانات وعرض المهام مرة أخرى
+    // تحديث المهام محليًا وإعادة رسمها
     const taskIndex = tasks.findIndex((t) => t._id === task._id);
     if (taskIndex !== -1) {
       tasks[taskIndex] = {
@@ -77,7 +78,7 @@ async function toggleTaskCompletion(index) {
         completed: task.completed,
         progress: task.progress,
       };
-      saveTasksToLocalStorage(); //  حفظ التحديث في التخزين المحلي
+      saveTasksToLocalStorage();
       renderTasks();
     }
   } catch (error) {
@@ -94,6 +95,36 @@ async function toggleTaskCompletion(index) {
       },
     });
   }
+}
+
+// دالة لتشغيل تأثير الكونفيتي
+function launchConfetti() {
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+    colors: ["#FFD700", "#32CD32", "#4682B4", "#FF4500"], // ألوان مبهجة
+  });
+}
+
+// رسائل عشوائية عند إكمال المهمة
+const completionMessages = [
+  "🎉 Great job! You’ve completed this task.",
+  "🚀 Amazing! One step closer to your goals.",
+  "🌟 Bravo! You’re on fire!",
+  "💪 Well done! Keep up the good work.",
+];
+
+// رسائل عشوائية عند إعادة فتح المهمة
+const reopenMessages = [
+  "🔓 No worries! You can always try again.",
+  "🔄 Task reopened. Let’s get back to it!",
+  "💡 Take your time, you’ve got this!",
+];
+
+// دالة للحصول على رسالة عشوائية
+function getRandomMessage(messages) {
+  return messages[Math.floor(Math.random() * messages.length)];
 }
 
 async function toggleTag(event, taskIndex, tagIndex) {

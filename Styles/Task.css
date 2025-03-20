@@ -134,9 +134,7 @@ body {
     margin-right: 38%;
     width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
   }
-  #project-list {
-    margin-top: 200px;
-  }
+
   #fixed-header {
     position: fixed;
     top: 0;
@@ -252,4 +250,101 @@ body {
 
 #review-modal.hide {
   animation: slideFadeOut 0.3s ease forwards;
+}
+/* 
+ */
+/* تصميم التنبيهات */
+.custom-alert-box {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.custom-alert-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.custom-alert-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* تأثير الكونفيتي للمهمة المكتملة */
+.confetti-completed {
+  position: relative;
+  overflow: hidden;
+}
+
+.confetti-completed::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: transparent;
+  animation: confettiCompleted 3s ease-out forwards;
+}
+
+@keyframes confettiCompleted {
+  0% {
+    background: transparent;
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  }
+  10% {
+    box-shadow: inset 20px -20px 0 rgba(245, 158, 11, 0.6),
+      /* أصفر ناعم */ inset -30px 30px 0 rgba(94, 174, 148, 0.6),
+      /* أخضر مائي هادئ */ inset 40px 10px 0 rgba(129, 140, 248, 0.6); /* أزرق فاتح مريح */
+  }
+  50% {
+    box-shadow: inset 100px -100px 0 rgba(245, 158, 11, 0.4),
+      inset -150px 150px 0 rgba(94, 174, 148, 0.4),
+      inset 200px 50px 0 rgba(129, 140, 248, 0.4);
+  }
+  100% {
+    box-shadow: inset 300px -300px 0 rgba(245, 158, 11, 0),
+      inset -450px 450px 0 rgba(94, 174, 148, 0),
+      inset 600px 150px 0 rgba(129, 140, 248, 0);
+  }
+}
+
+/* تأثير الكونفيتي للمهمة المعاد فتحها */
+.confetti-reopened {
+  position: relative;
+  overflow: hidden;
+}
+
+.confetti-reopened::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: transparent;
+  animation: confettiReopened 2.1s ease-out forwards;
+}
+
+@keyframes confettiReopened {
+  0% {
+    background: transparent;
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  }
+  10% {
+    box-shadow: inset 15px -15px 0 rgba(156, 163, 175, 0.5),
+      /* رمادي فاتح */ inset -20px 20px 0 rgba(209, 213, 219, 0.5); /* رمادي أفتح */
+  }
+  50% {
+    box-shadow: inset 80px -80px 0 rgba(156, 163, 175, 0.3),
+      inset -100px 100px 0 rgba(209, 213, 219, 0.3);
+  }
+  100% {
+    box-shadow: inset 200px -200px 0 rgba(156, 163, 175, 0),
+      inset -250px 250px 0 rgba(209, 213, 219, 0);
+  }
 }

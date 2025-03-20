@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Character Encoding and Viewport -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Security and Access Control -->
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <meta
       http-equiv="Cache-Control"
@@ -13,8 +10,6 @@
     />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-
-    <!-- Core Metadata -->
     <title>To Do List - Dashboard | Assistify</title>
     <meta
       name="description"
@@ -25,8 +20,6 @@
       content="to-do list, dashboard, task management, Assistify user, productivity"
     />
     <meta name="author" content="Assistify" />
-
-    <!-- Open Graph Metadata (Optional Social Media Sharing) -->
     <meta property="og:title" content="To Do List - Dashboard | Assistify" />
     <meta
       property="og:description"
@@ -38,12 +31,8 @@
     />
     <meta property="og:url" content="https://www.assistify.site/dashboard" />
     <meta property="og:type" content="website" />
-
-    <!-- Favicons -->
     <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
     <link rel="icon" type="image/png" sizes="192x192" href="/photo/logo.png" />
-
-    <!-- Stylesheets -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -55,14 +44,13 @@
     <link rel="stylesheet" href="/Styles/libs/fonts-googleapis.css" />
     <link rel="stylesheet" href="../Styles/main-content.css" />
     <link rel="stylesheet" href="../Styles/Task.css" />
-
-    <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script defer src="/js/main-content.js"></script>
+    <script defer="defer" src="/js/main-content.js"></script>
   </head>
   <body class="text-gray-100">
     <div
@@ -74,7 +62,6 @@
         class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-gray-200 transition-transform duration-300 ease-in-out md:relative md:shadow-lg flex flex-col h-screen sidebar"
         id="sidebar"
       >
-        <!-- Logo Section -->
         <div class="flex items-center px-6 py-4 border-b border-gray-800">
           <img
             src="/photo/logo.png"
@@ -84,82 +71,71 @@
           />
           <span class="text-xl font-semibold text-orange-400">ssistify</span>
         </div>
-
-        <!-- Navigation Menu -->
         <nav class="flex-1 px-3 py-4 overflow-y-auto">
           <ul class="space-y-1">
             <li>
               <a
                 href="./TDL.html"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md bg-gray-800 text-blue-400 transition-all duration-200 ease-in-out group"
-              >
-                <i
+                ><i
                   class="fas fa-tasks w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
                 ></i>
-                <span class="ml-3">TDL</span>
-              </a>
+                <span class="ml-3">TDL</span></a
+              >
             </li>
             <li>
               <a
                 href="./PJS.html"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
-              >
-                <i
+                ><i
                   class="fas fa-calendar-check w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
                 ></i>
-                <span class="ml-3">PJS</span>
-              </a>
+                <span class="ml-3">PJS</span></a
+              >
             </li>
             <li>
               <a
                 href="./ProgressTDL.html"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
-              >
-                <i
+                ><i
                   class="fas fa-chart-line w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
                 ></i>
-                <span class="ml-3">Progress TDL</span>
-              </a>
+                <span class="ml-3">Progress TDL</span></a
+              >
             </li>
             <li>
               <a
                 href="./ProgressPJS.html"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
-              >
-                <i
+                ><i
                   class="fas fa-chart-line w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
                 ></i>
-                <span class="ml-3">Progress PJS</span>
-              </a>
+                <span class="ml-3">Progress PJS</span></a
+              >
             </li>
           </ul>
         </nav>
-
-        <!-- Bottom Section (Pinned to Bottom) -->
-        <!-- Bottom Section (Pinned to Bottom) -->
         <div class="mt-auto px-3 py-4 border-t border-gray-800">
           <ul class="space-y-2">
             <li>
               <a
                 href="./account.html"
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
-              >
-                <i
+                ><i
                   class="fas fa-user-circle w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
                 ></i>
-                <span class="ml-3">Profile</span>
-              </a>
+                <span class="ml-3">Profile</span></a
+              >
             </li>
             <li>
               <a
                 class="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 ease-in-out group"
                 id="logout-btn"
-              >
-                <i
+                ><i
                   class="fas fa-sign-out-alt w-5 text-blue-400 transition-transform duration-200 group-hover:scale-110"
                 ></i>
-                <span class="ml-3">Logout</span>
-              </a>
+                <span class="ml-3">Logout</span></a
+              >
             </li>
           </ul>
         </div>

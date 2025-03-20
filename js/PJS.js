@@ -253,6 +253,15 @@ projectForm.addEventListener("submit", async (e) => {
     saveButton.disabled = false;
   }
 });
+// مستمع لحقل البحث
+searchInput.addEventListener("input", () => {
+  renderProjects();
+});
+
+// مستمع لقائمة التصفية
+filterImportance.addEventListener("change", () => {
+  renderProjects();
+});
 function renderProjects() {
   const searchTerm = searchInput.value.toLowerCase();
   const filterStatus = filterImportance.value;
