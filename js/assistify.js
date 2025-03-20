@@ -1,81 +1,50 @@
-const navbar = document.querySelector(".navbar");
-window.addEventListener("scroll", () => {
-  navbar.classList.toggle("scrolled", window.scrollY > 50);
-});
-
 gsap.registerPlugin(ScrollTrigger);
 
 gsap.from("header h1", {
   opacity: 0,
-  y: 50,
+  y: 30,
   duration: 1,
-  scrollTrigger: {
-    trigger: "header",
-    start: "top 80%",
-  },
+  ease: "power4.out",
 });
 
 gsap.from("header p", {
   opacity: 0,
-  y: 50,
+  y: 20,
   duration: 1,
-  delay: 0.5,
-  scrollTrigger: {
-    trigger: "header",
-    start: "top 80%",
-  },
+  delay: 0.2,
+  ease: "power4.out",
 });
 
-gsap.from("header a", {
+gsap.from("header .btn-primary", {
   opacity: 0,
-  y: 50,
+  scale: 0.95,
   duration: 1,
-  delay: 1,
-  scrollTrigger: {
-    trigger: "header",
-    start: "top 80%",
-  },
+  delay: 0.4,
+  ease: "power4.out",
 });
 
-gsap.from(".card", {
+gsap.from(".preview-container", {
   opacity: 0,
   y: 50,
-  duration: 1,
-  stagger: 0.3,
-  scrollTrigger: {
-    trigger: ".card",
-    start: "top 80%",
-  },
+  duration: 1.2,
+  delay: 0.6,
+  ease: "power4.out",
 });
 
-gsap.from("section h2", {
+gsap.from(".preview-project", {
   opacity: 0,
-  y: 50,
-  duration: 1,
-  scrollTrigger: {
-    trigger: "section h2",
-    start: "top 80%",
-  },
+  y: 20,
+  duration: 0.8,
+  stagger: 0.1,
+  ease: "power4.out",
+  scrollTrigger: { trigger: ".preview-container", start: "top 90%" },
 });
 
-gsap.from("section p", {
+gsap.from(".card-bg", {
   opacity: 0,
-  y: 50,
-  duration: 1,
-  stagger: 0.3,
-  scrollTrigger: {
-    trigger: "section p",
-    start: "top 80%",
-  },
-});
-
-gsap.from("section a", {
-  opacity: 0,
-  y: 50,
-  duration: 1,
-  delay: 0.5,
-  scrollTrigger: {
-    trigger: "section a",
-    start: "top 80%",
-  },
+  y: 20,
+  duration: 0.8,
+  stagger: 0.15,
+  ease: "power4.out",
+  scrollTrigger: { trigger: ".card-bg", start: "top 85%" },
 });

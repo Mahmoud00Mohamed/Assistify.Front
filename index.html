@@ -1,201 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Character Encoding and Viewport -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Core Metadata -->
-    <title>Assistify - Task Management & Project Scheduling</title>
+    <title>Assistify - Empower Your Workflow</title>
     <meta
       name="description"
-      content="Easily create, organize, and prioritize tasks. Plan projects efficiently and track progress with analytics and reports."
+      content="Assistify: Master tasks and projects with precision and ease."
     />
-    <meta
-      name="keywords"
-      content="task management, project scheduling, progress tracking, productivity, to-do list"
-    />
-    <meta name="author" content="Assistify" />
-
-    <!-- Open Graph Metadata (Social Media Sharing) -->
-    <meta
-      property="og:title"
-      content="Assistify - Task Management & Project Scheduling"
-    />
-    <meta
-      property="og:description"
-      content="Manage your tasks efficiently, schedule projects, and track progress effortlessly."
-    />
-    <meta property="og:image" content="/photo/logo.png" />
-    <meta property="og:url" content="https://www.assistify.site/" />
-    <meta property="og:type" content="website" />
-
-    <!-- Twitter Card Metadata -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Assistify - Task Management & Project Scheduling"
-    />
-    <meta
-      name="twitter:description"
-      content="Easily create, organize, and prioritize tasks. Plan projects efficiently and track progress with analytics."
-    />
-    <meta name="twitter:image" content="/photo/logo.png" />
-
-    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-
-    <!-- Stylesheets -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="/photo/logo.png" />
     <link rel="stylesheet" href="/Styles/assistify.css" />
-
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/photo/logo.png" />
-    <link rel="shortcut icon" href="/photo/logo.png" type="image/x-icon" />
-
-    <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
   </head>
   <body>
-    <nav class="navbar fixed w-full top-0 z-50 bg-transparent py-4 px-6">
-      <div class="container mx-auto flex items-center justify-between">
-        <a href="#" class="text-2xl font-bold text-blue-400">Assistify</a>
-        <div>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-[#111827] border-b border-gray-800 z-50">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a href="#" class="text-xl font-bold text-white flex items-center">
+          <img src="/photo/logo.png" alt="Assistify Logo" class="h-8 w-8" />
+          ssistify
+        </a>
+        <div class="flex items-center space-x-6">
           <a
             href="./authentication/Login.html"
-            class="px-4 py-2 text-sm font-semibold btn-primary rounded-lg hover:bg-blue-600 transition-all"
-            >Login</a
+            class="text-gray-400 hover:text-white text-sm font-medium"
+            >Log In</a
+          >
+          <a
+            href="./authentication/signup.html"
+            class="px-5 py-2 btn-primary text-sm font-medium"
+            >Get Started</a
           >
         </div>
       </div>
     </nav>
-    <header class="h-screen flex items-center justify-center text-center px-6">
-      <div class="max-w-3xl">
-        <h1 class="text-5xl font-bold mb-6">
-          Simplify Your Workflow with Assistify
-        </h1>
-        <p class="text-lg mb-8">
-          Manage tasks, track progress, and supercharge your productivity with
-          ease.
-        </p>
-        <a
-          href="./pages/TDL.html"
-          class="px-6 py-3 text-lg font-semibold btn-primary rounded-lg hover:bg-blue-600 transition-all"
-          >Try Assistify</a
+
+    <!-- Hero Section -->
+    <header class="pt-36 pb-24 text-center">
+      <div class="max-w-7xl mx-auto px-6">
+        <h1
+          class="text-5xl md:text-6xl font-extrabold gradient-text mb-6 tracking-tight"
         >
+          Empower Your Workflow
+        </h1>
+        <p
+          class="text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed"
+        >
+          Assistify transforms how you manage tasks and projects—bringing
+          clarity, control, and efficiency to every step.
+        </p>
+        <div class="flex justify-center space-x-4">
+          <a href="./pages/TDL.html" class="px-8 py-3 btn-primary font-medium"
+            >Try It
+          </a>
+          <a
+            href="./authentication/signup.html"
+            class="px-8 py-3 bg-transparent border border-gray-600 text-gray-300 rounded-md hover:bg-gray-800 font-medium"
+            >Learn More</a
+          >
+        </div>
+        <div class="mt-16 preview-container w-full max-w-5xl mx-auto">
+          <!-- Interactive Platform Preview -->
+          <div class="flex flex-col h-full">
+            <!-- Header with Filters -->
+            <div class="preview-header flex justify-between items-center">
+              <h4 class="text-sm font-semibold text-white">
+                Projects Dashboard
+              </h4>
+              <div class="flex space-x-2">
+                <select class="bg-gray-600 text-white text-xs rounded-md p-1">
+                  <option>All</option>
+                  <option>Newest</option>
+                  <option>Oldest</option>
+                  <option>In-Progress</option>
+                  <option>Completed</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  class="bg-gray-600 text-white text-xs rounded-md p-1 w-32"
+                />
+              </div>
+            </div>
+            <!-- Content -->
+            <div class="preview-content">
+              <!-- Project Card -->
+              <div class="preview-project flex flex-col">
+                <div class="flex justify-between items-center mb-3">
+                  <h5
+                    class="text-base font-semibold text-white flex items-center"
+                  >
+                    <i class="fas fa-folder-open text-[#60a5fa] mr-2"></i>App
+                    Development
+                  </h5>
+                  <div class="flex space-x-2">
+                    <button
+                      class="w-7 h-7 bg-yellow-500/10 text-yellow-300 rounded-full hover:bg-yellow-400 hover:text-gray-900"
+                    >
+                      <i class="fas fa-pen text-xs"></i>
+                    </button>
+                    <button
+                      class="w-7 h-7 bg-red-500/10 text-red-300 rounded-full hover:bg-red-400 hover:text-gray-900"
+                    >
+                      <i class="fas fa-trash text-xs"></i>
+                    </button>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-400 mb-3">
+                  Build a mobile app for customer engagement.
+                </p>
+                <div class="preview-task">
+                  <div class="flex justify-between items-center mb-1">
+                    <h6 class="text-sm text-white">UI Design</h6>
+                    <span class="text-xs flex items-center"
+                      ><span class="status-dot bg-blue-500"></span
+                      >In-Progress</span
+                    >
+                  </div>
+                  <div class="w-full h-1.5 bg-gray-700 rounded-full">
+                    <div class="progress-bar h-full" style="width: 70%"></div>
+                  </div>
+                </div>
+                <div class="preview-task mt-2">
+                  <div class="flex justify-between items-center mb-1">
+                    <h6 class="text-sm text-white">Backend Setup</h6>
+                    <span class="text-xs flex items-center"
+                      ><span class="status-dot bg-green-500"></span
+                      >Completed</span
+                    >
+                  </div>
+                  <div class="w-full h-1.5 bg-gray-700 rounded-full">
+                    <div class="progress-bar h-full" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Timeline & Stats -->
+              <div class="flex flex-col justify-between">
+                <div class="preview-project flex-grow">
+                  <h5
+                    class="text-base font-semibold text-white mb-3 flex items-center"
+                  >
+                    <i class="fas fa-calendar-alt text-[#60a5fa] mr-2"></i
+                    >Timeline
+                  </h5>
+                  <div class="relative pl-6">
+                    <div
+                      class="absolute w-1 bg-gradient-to-b from-green-500 to-red-500 h-full left-2 top-0"
+                    ></div>
+                    <div class="space-y-5">
+                      <div class="flex items-center">
+                        <div
+                          class="w-3 h-3 bg-green-500 rounded-full z-10"
+                        ></div>
+                        <span class="ml-4 text-xs text-gray-300"
+                          >Mar 15, 2025 - Start</span
+                        >
+                      </div>
+                      <div class="flex items-center">
+                        <div class="w-3 h-3 bg-red-500 rounded-full z-10"></div>
+                        <span class="ml-4 text-xs text-gray-300"
+                          >Apr 15, 2025 - End</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="preview-project mt-2">
+                  <h5
+                    class="text-base font-semibold text-white mb-2 flex items-center"
+                  >
+                    <i class="fas fa-chart-pie text-[#60a5fa] mr-2"></i>Quick
+                    Stats
+                  </h5>
+                  <p class="text-xs text-gray-400">
+                    Tasks: <span class="text-[#60a5fa]">4/6</span>
+                  </p>
+                  <p class="text-xs text-gray-400 mt-1">
+                    Progress: <span class="text-[#60a5fa]">67%</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
-    <div class="wave-divider">
-      <svg
-        data-name="Layer 1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1200 120"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-          class="shape-fill"
-        ></path>
-      </svg>
-    </div>
-    <section class="py-20 bg-gray-800">
-      <div class="container mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
-          Why Choose Assistify?
+
+    <!-- Mission Section -->
+    <section class="py-24 bg-[#1f2937]">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold text-white mb-6">Our Mission</h2>
+        <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+          At Assistify, we believe work should be intuitive and stress-free. Our
+          platform empowers you to focus on what matters most by simplifying
+          task management and project execution.
+        </p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-white text-center mb-12">
+          Built for Success
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="card p-6 rounded-lg">
-            <i class="fas fa-tasks text-4xl text-blue-400 mb-4"></i>
-            <h3 class="text-xl font-semibold mb-3">Task Management</h3>
-            <p>
-              Easily create, organize, and prioritize your tasks with our
-              intuitive task manager.
+          <div class="p-6 card-bg">
+            <i class="fas fa-tasks text-3xl text-[#60a5fa] mb-5"></i>
+            <h3 class="text-xl font-semibold text-white mb-3">Task Control</h3>
+            <p class="text-gray-400">
+              Organize tasks with precision—set priorities, deadlines, and
+              dependencies in a seamless interface.
             </p>
           </div>
-          <div class="card p-6 rounded-lg">
-            <i class="fas fa-calendar-alt text-4xl text-green-400 mb-4"></i>
-            <h3 class="text-xl font-semibold mb-3">Project Scheduling</h3>
-            <p>
-              Plan and track your projects with our powerful scheduling tools.
+          <div class="p-6 card-bg">
+            <i class="fas fa-calendar-alt text-3xl text-[#60a5fa] mb-5"></i>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              Project Clarity
+            </h3>
+            <p class="text-gray-400">
+              Map out projects with timelines and milestones, ensuring every
+              detail is tracked and aligned.
             </p>
           </div>
-          <div class="card p-6 rounded-lg">
-            <i class="fas fa-chart-line text-4xl text-purple-400 mb-4"></i>
-            <h3 class="text-xl font-semibold mb-3">Progress Tracking</h3>
-            <p>Monitor your progress with detailed analytics and reports.</p>
+          <div class="p-6 card-bg">
+            <i class="fas fa-chart-line text-3xl text-[#60a5fa] mb-5"></i>
+            <h3 class="text-xl font-semibold text-white mb-3">
+              Data-Driven Insights
+            </h3>
+            <p class="text-gray-400">
+              Gain visibility into your performance with analytics that
+              highlight progress and opportunities.
+            </p>
           </div>
         </div>
       </div>
     </section>
-    <div class="wave-divider rotate-180">
-      <svg
-        data-name="Layer 1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1200 120"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-          class="shape-fill"
-        ></path>
-      </svg>
-    </div>
-    <section class="py-20">
-      <div class="container mx-auto text-center px-4">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">About Assistify</h2>
-        <p class="text-base md:text-lg mb-8">
-          Assistify is designed to help you stay organized, productive, and
-          focused. Whether you're managing personal tasks or team projects, our
-          platform provides all the tools you need to succeed.
-        </p>
-        <p class="text-base md:text-lg mb-8">
-          Join thousands of users who have transformed their productivity with
-          Assistify.
+
+    <!-- Use Cases Section -->
+    <section class="py-24 bg-[#1f2937]">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-white text-center mb-12">
+          Who We Serve
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-6 card-bg">
+            <h3 class="text-xl font-semibold text-white mb-3">Professionals</h3>
+            <p class="text-gray-400">
+              Stay ahead of deadlines and manage workloads with a tool tailored
+              for individual excellence.
+            </p>
+          </div>
+          <div class="p-6 card-bg">
+            <h3 class="text-xl font-semibold text-white mb-3">Teams</h3>
+            <p class="text-gray-400">
+              Collaborate effortlessly with shared views, task assignments, and
+              real-time updates.
+            </p>
+          </div>
+          <div class="p-6 card-bg">
+            <h3 class="text-xl font-semibold text-white mb-3">Enterprises</h3>
+            <p class="text-gray-400">
+              Scale operations with robust features for complex projects and
+              cross-team coordination.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 text-center">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-white mb-6">
+          Start Achieving More Today
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+          Join a growing community of users who trust Assistify to streamline
+          their work. Free to start, no strings attached.
         </p>
         <a
           href="./authentication/signup.html"
-          class="px-6 py-3 text-lg font-semibold btn-primary rounded-lg hover:bg-blue-600 transition-all"
-          >Sign Up Now</a
+          class="inline-block px-8 py-3 btn-primary font-medium"
+          >Get Started Now</a
         >
       </div>
     </section>
-    <footer class="bg-gray-800 py-6">
-      <div class="container mx-auto text-center">
-        <div class="mb-4">
-          <a
-            href="mailto:yourname@example.com"
-            class="text-gray-400 mx-3 hover:text-yellow-400"
-            ><i class="fas fa-envelope"></i> </a
-          ><a
-            href="https://www.linkedin.com/in/yourprofile"
-            target="_blank"
-            class="text-gray-400 mx-3 hover:text-blue-400"
-            ><i class="fab fa-linkedin"></i> </a
-          ><a
-            href="https://github.com/yourusername"
-            target="_blank"
-            class="text-gray-400 mx-3 hover:text-white"
-            ><i class="fab fa-github"></i> </a
-          ><a
-            href="https://twitter.com/yourusername"
-            target="_blank"
-            class="text-gray-400 mx-3 hover:text-blue-300"
-            ><i class="fab fa-twitter"></i
-          ></a>
+
+    <!-- Footer -->
+    <footer class="bg-[#111827] py-12 border-t border-gray-800">
+      <div
+        class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-gray-400"
+      >
+        <div class="mb-6 md:mb-0 text-center md:text-left">
+          <h3 class="text-white font-semibold text-lg">Assistify</h3>
+          <p class="text-sm">Empowering productivity since 2025.</p>
+          <p class="text-xs mt-1">© 2025 Assistify. All rights reserved.</p>
         </div>
-        <p class="text-gray-400">&copy; 2025 Assistify. All rights reserved.</p>
+        <div class="flex space-x-6">
+          <a href="mailto:support@assistify.site" class="hover:text-white">
+            <i class="fas fa-envelope text-lg"></i> support@assistify.site
+          </a>
+        </div>
       </div>
     </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
     <script src="/js/assistify.js"></script>
   </body>
 </html>
