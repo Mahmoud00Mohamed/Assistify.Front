@@ -135,7 +135,7 @@ body {
     width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
   }
   body {
-    padding-top: 4rem; /* تعويض ارتفاع الهيدر */
+    padding-top: 70px; /* تعويض ارتفاع الهيدر */
   }
 
   #fixed-header {
@@ -154,8 +154,8 @@ body {
     z-index: 10;
   }
   main {
-    height: calc(100vh - 4rem); /* طرح ارتفاع الهيدر */
-    overflow-y: auto;
+    height: calc(100vh - 70px); /* طرح ارتفاع الهيدر */
+    margin-bottom: 150px;
   }
 }
 

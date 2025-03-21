@@ -162,6 +162,10 @@ body {
     width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
   }
 
+  body {
+    padding-top: 70px; /* تعويض ارتفاع الهيدر */
+  }
+
   #fixed-header {
     position: fixed;
     top: 0;
@@ -175,7 +179,11 @@ body {
     color: white;
     font-weight: bold;
     font-size: 1.5rem;
-    z-index: 10000;
+    z-index: 10;
+  }
+  main {
+    height: calc(100vh - 70px); /* طرح ارتفاع الهيدر */
+    margin-bottom: 150px;
   }
 }
 
