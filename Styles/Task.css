@@ -123,19 +123,30 @@ body {
   }
 
   #search-filter {
-    flex-direction: column;
+    position: sticky;
+    top: 0; /* يلتصق بأعلى main عند التمرير */
+    z-index: 1000; /* لضمان عدم التداخل مع عناصر أخرى */
+    display: flex;
+    flex-direction: column; /* كما هو في تصميمك الحالي */
     align-items: flex-end;
     gap: 10px;
-    padding-top: 40px;
+  }
+  #task-list {
+    margin-top: 20px; /* مسافة للفصل بين search-filter و task-list */
+    max-height: calc(100vh - 200px); /* لضمان عدم التجاوز */
+    overflow-y: auto; /* للتمرير داخل task-list إذا لزم الأمر */
+  }
+  main {
+    position: relative; /* لدعم sticky داخلها */
+    min-height: 100vh; /* لضمان امتداد الارتفاع */
+    padding: 8px;
+    overflow-y: auto; /* للتعامل مع التمرير الكلي */
   }
 
   #filter-and-sort {
     margin-top: 0; /* إزالة الهامش العلوي الكبير */
     margin-right: 38%;
     width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
-  }
-  body {
-    padding-top: 70px; /* تعويض ارتفاع الهيدر */
   }
 
   #fixed-header {
@@ -152,10 +163,6 @@ body {
     font-weight: bold;
     font-size: 1.5rem;
     z-index: 10;
-  }
-  main {
-    height: calc(100vh - 70px); /* طرح ارتفاع الهيدر */
-    margin-bottom: 150px;
   }
 }
 
