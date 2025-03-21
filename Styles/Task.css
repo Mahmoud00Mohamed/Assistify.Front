@@ -103,36 +103,14 @@ body {
     display: none;
   }
 }
-main {
-  position: relative;
-  min-height: 100vh;
-  overflow-y: auto;
-  padding-bottom: 20px; /* مساحة إضافية في الأسفل */
-}
+
 @media (max-width: 1180px) {
-  /* إصلاح الـ page-title وترك مساحة كافية */
   #page-title {
     position: fixed;
     top: 2.3vh;
     left: 50px;
     z-index: 10000;
     font-size: 1rem !important;
-  }
-
-  /* تحديد مكان search-filter بشكل أفضل */
-  #search-filter {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-    padding-top: 60px; /* زيادة المسافة لتجنب التداخل مع page-title */
-    position: relative; /* تغيير من fixed إلى relative لتجنب الإزاحة */
-    width: 100%;
-  }
-
-  #search-input,
-  #filter-and-sort {
-    width: 60%; /* تقليل العرض لضمان الظهور الكامل */
-    margin-right: 10px;
   }
 
   #new-task-btn {
@@ -144,16 +122,23 @@ main {
     z-index: 10000;
   }
 
-  /* ضمان أن task-list لا يتجاوز الحدود */
+  #search-filter {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    padding-top: 40px;
+  }
   #task-list {
-    margin-top: 120px; /* إعطاء مساحة كافية لـ search-filter */
-    overflow-y: auto;
-    max-height: calc(
-      100vh - 200px
-    ); /* تحديد الحد الأقصى للارتفاع بناءً على الشاشة */
+    min-height: 200px; /* تأكد من أن لديه مساحة كافية لمنع التحريك */
+    margin-bottom: 100px;
   }
 
-  /* إصلاح الـ fixed-header */
+  #filter-and-sort {
+    margin-top: 0; /* إزالة الهامش العلوي الكبير */
+    margin-right: 38%;
+    width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
+  }
+
   #fixed-header {
     position: fixed;
     top: 0;
@@ -164,6 +149,9 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
     z-index: 10;
   }
 }
