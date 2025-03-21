@@ -76,12 +76,21 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
+    bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+    overflow-y: auto;
     z-index: 100000;
   }
 
   #sidebar.active {
     transform: translateX(0);
+  }
+
+  .mt-auto.px-3.py-4.border-t.border-gray-800 {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    position: relative;
   }
   #logo-Section {
     margin-left: 15%;
@@ -160,13 +169,13 @@ body {
     display: none;
   }
 }
-
-/* تصميم احترافي جديد لوضع الهاتف (أقل من 768px) */
 @media (max-width: 767px) {
   .text-sm {
     font-size: 11px;
   }
-
+}
+/* تصميم احترافي جديد لوضع الهاتف (أقل من 768px) */
+@media (max-width: 1180px) {
   /* قسم البحث والفلترة */
   #search-filter {
     position: relative; /* غير ثابت ليتماشى مع تدفق الصفحة */
@@ -208,7 +217,7 @@ body {
 
   /* قائمة الفلترة والترتيب */
   #filter-importance {
-    width: 120px; /* عرض ثابت للتحكم في الحجم */
+    width: 120px;
     margin-left: 10px;
     padding: 8px 12px;
     font-size: 0.85rem;
