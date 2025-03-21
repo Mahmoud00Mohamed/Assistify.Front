@@ -53,37 +53,57 @@
     />
     <link rel="stylesheet" href="/Styles/libs/fonts-googleapis.css" />
     <link rel="stylesheet" href="/Styles/main-content.css" />
-    <link rel="stylesheet" href="/Styles/Task.css" />
 
     <!-- Inline Styles -->
     <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #060b10;
+      }
+
       .status-pending {
         color: #fbbf24;
       }
+
       .status-in-progress {
         color: #3b82f6;
       }
+
       .status-completed {
         color: #10b981;
       }
+
       .status-overdue {
         color: #ef4444;
       }
+
       .accordion-header {
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
+
       .accordion-header:hover {
         background-color: rgba(255, 255, 255, 0.1);
       }
+
       .accordion-content {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
       }
+
       .accordion-content.open {
         max-height: 500px;
       }
+
+      .text-accent {
+        color: #34d399;
+      }
+
+      .text-sm {
+        font-size: 11px;
+      }
+
       @media (max-width: 1180px) {
         #fixed-header2 {
           position: fixed;
@@ -100,8 +120,85 @@
           font-size: 1.5rem;
           z-index: 10;
         }
+
         #grid-up {
           margin-top: 70px;
+        }
+
+        #sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease-in-out;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100%;
+          box-sizing: border-box;
+          overflow-y: auto;
+          z-index: 100000;
+        }
+
+        #sidebar.active {
+          transform: translateX(0);
+        }
+
+        #logo-Section {
+          margin-left: 15%;
+        }
+
+        #menu-toggle {
+          position: fixed;
+          top: 2%;
+          left: 20px;
+          z-index: 100000;
+          border: none;
+          padding: 10px;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: transparent;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        #menu-toggle:hover {
+          transform: scale(1.1);
+        }
+
+        #menu-toggle:active {
+          transform: scale(0.95);
+        }
+
+        #menu-toggle i {
+          color: inherit;
+          font-size: 1.2rem;
+          transition: color 0.3s ease;
+        }
+
+        #menu-toggle.active {
+          color: #3b82f6;
+        }
+
+        #page-title {
+          position: fixed;
+          top: 2.3vh;
+          left: 50px;
+          z-index: 10000;
+          font-size: 1rem !important;
+        }
+      }
+
+      @media (min-width: 1180px) {
+        #menu-toggle {
+          display: none;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .text-sm {
+          font-size: 11px;
         }
       }
     </style>
