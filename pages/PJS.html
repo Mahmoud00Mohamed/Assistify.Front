@@ -4,10 +4,7 @@
     <!-- Character Encoding and Viewport -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+
     <!-- Security and Access Control -->
     <meta name="robots" content="noindex, nofollow" />
     <meta
@@ -394,19 +391,7 @@
     <head>
       <link rel="stylesheet" href="../Styles/Schedule.css" />
     </head>
-    <script>
-      window.onbeforeunload = function () {
-        localStorage.setItem("scrollPosition", window.scrollY);
-      };
-
-      window.onload = function () {
-        const scrollPosition = localStorage.getItem("scrollPosition");
-        if (scrollPosition) {
-          window.scrollTo(0, parseInt(scrollPosition));
-          localStorage.removeItem("scrollPosition");
-        }
-      };
-    </script>
+    <script></script>
     <script src="/js/api.js"></script>
     <script src="/js/showAlert.js"></script>
     <script src="/js/toggle.js"></script>
@@ -416,5 +401,10 @@
     <script src="/js/main/sync.js"></script>
     <script src="/js/main/authEvents.js"></script>
     <script src="/js/main/logoutButton.js"></script>
+    <script>
+      window.addEventListener("load", () => {
+        window.scrollTo(0, 0);
+      });
+    </script>
   </body>
 </html>
