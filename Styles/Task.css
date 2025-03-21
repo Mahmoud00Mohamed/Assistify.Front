@@ -134,10 +134,12 @@ body {
     margin-right: 38%;
     width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
   }
+  body {
+    padding-top: 4rem; /* تعويض ارتفاع الهيدر */
+  }
 
   #fixed-header {
     position: fixed;
-    padding-top: env(safe-area-inset-top);
     top: 0;
     left: 0;
     width: 100%;
@@ -152,8 +154,8 @@ body {
     z-index: 10;
   }
   main {
-    padding-top: calc(70px + env(safe-area-inset-top));
-    height: calc(100vh - 70px);
+    height: calc(100vh - 4rem); /* طرح ارتفاع الهيدر */
+    overflow-y: auto;
   }
 }
 
