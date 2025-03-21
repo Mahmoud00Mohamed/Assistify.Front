@@ -334,15 +334,3 @@ body {
 .expanded-text {
   -webkit-line-clamp: unset !important; /* إزالة التقييد */
 }
-@media (max-width: 767px) {
-  aside {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: env(safe-area-inset-bottom);
-    width: 250px;
-    padding-bottom: env(safe-area-inset-bottom);
-    overflow-y: auto;
-    z-index: 1000;
-  }
-}
