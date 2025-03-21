@@ -1,3 +1,4 @@
+/* التصميم الأساسي للصفحة */
 body {
   font-family: "Inter", sans-serif;
   background-color: #060b10;
@@ -7,50 +8,62 @@ body {
   background-color: #3b82f6;
   transition: background-color 0.2s ease;
 }
+
 .btn-primary:hover {
   background-color: #2563eb;
 }
+
 .checkbox:checked {
   background-color: #3b82f6;
 }
+
 .text-accent {
   color: #34d399;
 }
+
 .text-secondary {
   color: #94a3b8;
 }
+
 .bg-accent {
   background-color: #34d399;
 }
+
 .bg-accent:hover {
   background-color: #10b981;
 }
+
 .progress-bar {
   height: 4px;
   background-color: #3b82f6;
   border-radius: 2px;
 }
+
 .priority-high {
   background-color: #ef4444;
 }
+
 .priority-medium {
   background-color: #f59e0b;
 }
+
 .priority-low {
   background-color: #34d399;
 }
+
 .task-description {
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
+/* التصميم للشاشات المتوسطة والصغيرة */
 @media (max-width: 1180px) {
   #sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     position: fixed;
-    top: 0%;
+    top: 0;
     left: 0;
     height: 100vh;
     z-index: 100000;
@@ -59,9 +72,11 @@ body {
   #sidebar.active {
     transform: translateX(0);
   }
+
   #logo-Section {
     margin-left: 15%;
   }
+
   #menu-toggle {
     position: fixed;
     top: 2%;
@@ -93,18 +108,11 @@ body {
     font-size: 1.2rem;
     transition: color 0.3s ease;
   }
+
   #menu-toggle.active {
     color: #3b82f6;
   }
-}
 
-@media (min-width: 1180px) {
-  #menu-toggle {
-    display: none;
-  }
-}
-
-@media (max-width: 1180px) {
   #page-title {
     position: fixed;
     top: 2.3vh;
@@ -120,23 +128,6 @@ body {
     font-size: 0.7rem;
     width: fit-content;
     z-index: 10000;
-  }
-
-  #search-filter {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-    padding-top: 40px;
-  }
-  #task-list {
-    min-height: 200px; /* تأكد من أن لديه مساحة كافية لمنع التحريك */
-    margin-bottom: 100px;
-  }
-
-  #filter-and-sort {
-    margin-top: 0; /* إزالة الهامش العلوي الكبير */
-    margin-right: 38%;
-    width: fit-content; /* لجعل الفلتر يأخذ العرض الكامل */
   }
 
   #fixed-header {
@@ -156,12 +147,126 @@ body {
   }
 }
 
-@media (max-width: 769px) {
-  .text-sm {
-    font-size: 11px;
+/* التصميم للشاشات الكبيرة */
+@media (min-width: 1180px) {
+  #menu-toggle {
+    display: none;
   }
 }
 
+/* تصميم احترافي جديد لوضع الهاتف (أقل من 768px) */
+@media (max-width: 767px) {
+  .text-sm {
+    font-size: 11px;
+  }
+
+  /* قسم البحث والفلترة */
+  #search-filter {
+    position: relative; /* غير ثابت ليتماشى مع تدفق الصفحة */
+    display: flex;
+    flex-direction: row; /* ترتيب أفقي لتوفير المساحة */
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin-top: 60px; /* إفساح مجال للـ header */
+    background-color: #0f172a; /* خلفية داكنة أنيقة */
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* حقل البحث */
+  #search-input {
+    flex: 1; /* يأخذ المساحة المتاحة */
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background-color: #1e293b;
+    border: none;
+    border-radius: 8px;
+    color: #e5e7eb;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #search-input::placeholder {
+    color: #9ca3af;
+  }
+
+  #search-input:focus {
+    background-color: #1f2a44;
+    box-shadow: 0 0 0 2px #3b82f6;
+    outline: none;
+  }
+
+  /* قائمة الفلترة والترتيب */
+  #filter-and-sort {
+    width: 120px; /* عرض ثابت للتحكم في الحجم */
+    margin-left: 10px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background-color: #1e293b;
+    border: none;
+    border-radius: 8px;
+    color: #e5e7eb;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e5e7eb' width='14' height='14'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+  }
+
+  #filter-and-sort:focus {
+    background-color: #1f2a44;
+    box-shadow: 0 0 0 2px #3b82f6;
+    outline: none;
+  }
+
+  /* ضبط زر New Task */
+  #new-task-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 0.7rem;
+    padding: 6px 12px;
+    background-color: #3b82f6;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    z-index: 10000;
+  }
+
+  #new-task-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  /* ضبط عنوان الصفحة */
+  #page-title {
+    position: fixed;
+    top: 15px;
+    left: 50px;
+    font-size: 1rem;
+    z-index: 10000;
+  }
+
+  /* ضبط زر القائمة */
+  #menu-toggle {
+    position: fixed;
+    top: 12px;
+    left: 10px;
+    z-index: 100000;
+  }
+
+  /* ضبط الـ header الثابت */
+  #fixed-header {
+    height: 60px;
+    font-size: 1.2rem;
+  }
+
+  /* ضبط المحتوى الرئيسي */
+  main {
+    padding-top: 20px; /* تقليل المسافة العلوية */
+  }
+}
+
+/* الرسوم المتحركة */
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
@@ -180,9 +285,11 @@ body {
   animation: gradientAnimation 3s ease infinite;
 }
 
+/* تصميم المودال */
 #fullscreen-modal.show {
   z-index: 9999999;
 }
+
 .swal2-container {
   z-index: 99999999 !important;
 }
@@ -191,18 +298,22 @@ body {
   opacity: 1;
   pointer-events: all;
 }
+
 #fullscreen-modal.show #modal-content {
   opacity: 1;
   transform: scale(1);
 }
+
 #fullscreen-modal {
   opacity: 0;
   pointer-events: none;
 }
+
 #modal-content {
   transform: scale(0.75);
   opacity: 0;
 }
+
 #task-modal,
 #fullscreen-modal,
 #review-modal {
@@ -255,8 +366,7 @@ body {
 #review-modal.hide {
   animation: slideFadeOut 0.3s ease forwards;
 }
-/* 
- */
+
 /* تصميم التنبيهات */
 .custom-alert-box {
   border-radius: 12px;
@@ -301,8 +411,8 @@ body {
   }
   10% {
     box-shadow: inset 20px -20px 0 rgba(245, 158, 11, 0.6),
-      /* أصفر ناعم */ inset -30px 30px 0 rgba(94, 174, 148, 0.6),
-      /* أخضر مائي هادئ */ inset 40px 10px 0 rgba(129, 140, 248, 0.6); /* أزرق فاتح مريح */
+      inset -30px 30px 0 rgba(94, 174, 148, 0.6),
+      inset 40px 10px 0 rgba(129, 140, 248, 0.6);
   }
   50% {
     box-shadow: inset 100px -100px 0 rgba(245, 158, 11, 0.4),
@@ -341,7 +451,7 @@ body {
   }
   10% {
     box-shadow: inset 15px -15px 0 rgba(156, 163, 175, 0.5),
-      /* رمادي فاتح */ inset -20px 20px 0 rgba(209, 213, 219, 0.5); /* رمادي أفتح */
+      inset -20px 20px 0 rgba(209, 213, 219, 0.5);
   }
   50% {
     box-shadow: inset 80px -80px 0 rgba(156, 163, 175, 0.3),
