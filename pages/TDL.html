@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta name="robots" content="noindex, nofollow" />
     <meta
       http-equiv="Cache-Control"
@@ -375,14 +379,17 @@
       </div>
     </div>
     <script>
-      if (
-        navigator.userAgent.includes("iPhone") ||
-        navigator.userAgent.includes("iPad")
-      ) {
-        window.addEventListener("beforeunload", function () {
-          window.scrollTo(0, 0);
-        });
-      }
+      window.onbeforeunload = function () {
+        localStorage.setItem("scrollPosition", window.scrollY);
+      };
+
+      window.onload = function () {
+        const scrollPosition = localStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+          window.scrollTo(0, parseInt(scrollPosition));
+          localStorage.removeItem("scrollPosition");
+        }
+      };
     </script>
     <script src="/js/showAlert.js"></script>
     <script src="/js/app.js"></script>

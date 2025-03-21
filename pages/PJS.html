@@ -4,7 +4,10 @@
     <!-- Character Encoding and Viewport -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <!-- Security and Access Control -->
     <meta name="robots" content="noindex, nofollow" />
     <meta
@@ -392,14 +395,17 @@
       <link rel="stylesheet" href="../Styles/Schedule.css" />
     </head>
     <script>
-      if (
-        navigator.userAgent.includes("iPhone") ||
-        navigator.userAgent.includes("iPad")
-      ) {
-        window.addEventListener("beforeunload", function () {
-          window.scrollTo(0, 0);
-        });
-      }
+      window.onbeforeunload = function () {
+        localStorage.setItem("scrollPosition", window.scrollY);
+      };
+
+      window.onload = function () {
+        const scrollPosition = localStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+          window.scrollTo(0, parseInt(scrollPosition));
+          localStorage.removeItem("scrollPosition");
+        }
+      };
     </script>
     <script src="/js/api.js"></script>
     <script src="/js/showAlert.js"></script>
