@@ -2,14 +2,12 @@
 
 // auth.js
 
-// auth.js
-// const apiBaseUrl = "http://localhost:3002/api";
 const apiBaseUrl = "https://api.assistify.site/api";
 
 var accessToken = localStorage.getItem("accessToken");
 var refreshTimeout = null;
 
-//  استخراج وقت انتهاء التوكن
+// استخراج وقت انتهاء التوكن
 function getTokenExpiration(token) {
   if (!token) return null;
   try {
@@ -20,7 +18,7 @@ function getTokenExpiration(token) {
   }
 }
 
-//  جدولة تحديث التوكن قبل انتهائه بدقيقتين
+// جدولة تحديث التوكن قبل انتهائه بدقيقتين
 function scheduleTokenRefresh() {
   if (!accessToken) return;
 
@@ -41,7 +39,17 @@ function scheduleTokenRefresh() {
   }
 }
 
-//  تحديث التوكن عند الحاجة فقط
+// التحقق من حالة الخادم
+async function pingServer() {
+  try {
+    const response = await fetch(`${apiBaseUrl}/auth/ping`, { method: "GET" });
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
+
+// تحديث التوكن مع إعادة المحاولة وtimeout
 function refreshAccessToken(forceRefresh, retries = 3) {
   forceRefresh = forceRefresh || false;
 
@@ -50,18 +58,22 @@ function refreshAccessToken(forceRefresh, retries = 3) {
     return Promise.resolve(true);
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثوانٍ
+
   return fetch(`${apiBaseUrl}/auth/refresh-token`, {
     method: "POST",
     credentials: "include",
+    signal: controller.signal,
   })
     .then((response) => {
+      clearTimeout(timeoutId);
       if (!response.ok) {
         if (retries > 0) {
-          return new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
+          return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
             refreshAccessToken(forceRefresh, retries - 1)
           );
         }
-
         logoutUser();
         return false;
       }
@@ -71,26 +83,41 @@ function refreshAccessToken(forceRefresh, retries = 3) {
       if (data) {
         accessToken = data.accessToken;
         localStorage.setItem("accessToken", accessToken);
-
         scheduleTokenRefresh();
         return true;
       }
     })
     .catch((error) => {
+      clearTimeout(timeoutId);
+      if (retries > 0 && error.name === "AbortError") {
+        return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
+          refreshAccessToken(forceRefresh, retries - 1)
+        );
+      }
       logoutUser();
       return false;
     });
 }
 
-//  عند تحميل الصفحة، حاول تحديث التوكن باستخدام refreshToken
-function initializeAuth() {
-  // التحقق من وجود accessToken أو refreshToken في الكوكيز (افتراضيًا)
+// تهيئة المصادقة مع التحقق من الخادم
+async function initializeAuth() {
   if (
     !localStorage.getItem("accessToken") &&
     !document.cookie.includes("refreshToken")
   ) {
     window.location.href = "../authentication/Login.html";
     return Promise.resolve(false);
+  }
+
+  let serverAwake = await pingServer();
+  if (!serverAwake) {
+    await new Promise((resolve) => setTimeout(resolve, 3000)); // الانتظار 3 ثوانٍ
+    serverAwake = await pingServer();
+  }
+
+  if (!serverAwake) {
+    logoutUser();
+    return false;
   }
 
   return fetch(`${apiBaseUrl}/auth/refresh-token`, {
@@ -108,7 +135,6 @@ function initializeAuth() {
       if (data && data.accessToken) {
         accessToken = data.accessToken;
         localStorage.setItem("accessToken", accessToken);
-
         scheduleTokenRefresh();
         return true;
       }
@@ -120,7 +146,7 @@ function initializeAuth() {
     });
 }
 
-//  مزامنة التوكن بين التبويبات
+// مزامنة التوكن بين التبويبات
 window.addEventListener("storage", function (event) {
   if (event.key === "accessToken") {
     accessToken = event.newValue;
@@ -132,7 +158,7 @@ window.addEventListener("storage", function (event) {
   }
 });
 
-//  إعادة تحميل الصفحة عند استرجاعها من الكاش
+// إعادة تحميل الصفحة عند استرجاعها من الكاش
 window.addEventListener("pageshow", function (event) {
   if (event.persisted) {
     window.location.reload();

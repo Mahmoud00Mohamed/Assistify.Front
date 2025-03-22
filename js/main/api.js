@@ -1,7 +1,6 @@
 // 2️⃣ ملف api.js (مسؤول عن إرسال الطلبات مع التوكن)
 
 // api.js
-
 function fetchWithAuth(url, options) {
   options = options || {};
   options.credentials = "include";
@@ -22,5 +21,8 @@ function fetchWithAuth(url, options) {
       }
       return response;
     })
-    .catch((error) => {});
+    .catch((error) => {
+      console.error("Fetch error:", error);
+      throw error; // للسماح بمعالجة الأخطاء في مكان آخر إذا لزم الأمر
+    });
 }

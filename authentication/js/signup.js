@@ -88,9 +88,19 @@ document
 function signupWithGoogle() {
   window.location.href = `${apiBaseUrl}/auth/google`; // توجيه المستخدم إلى نقطة نهاية Google في الخادم
 }
+function checkLoginStatus() {
+  const accessToken = localStorage.getItem("accessToken");
 
+  if (accessToken) {
+    // إذا كان المستخدم مسجلاً، يتم تحويله إلى الصفحة الداخلية
+    window.location.href = "../pages/TDL.html";
+  }
+}
 // معالجة رد الاتصال من Google
 window.onload = function () {
+  checkLoginStatus();
+
+  // باقي الكود الخاص بمعالجة رد الاتصال من Google
   const urlParams = new URLSearchParams(window.location.search);
   const accessToken = urlParams.get("accessToken");
 

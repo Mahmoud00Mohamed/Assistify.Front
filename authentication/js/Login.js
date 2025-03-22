@@ -261,7 +261,21 @@ function signupWithGoogle() {
 }
 
 // معالجة رد الاتصال من Google
+// دالة للتحقق من حالة تسجيل الدخول
+function checkLoginStatus() {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (accessToken) {
+    // إذا كان المستخدم مسجلاً، يتم تحويله إلى الصفحة الداخلية
+    window.location.href = "../pages/TDL.html";
+  }
+}
+
+// استدعاء الدالة عند تحميل الصفحة
 window.onload = function () {
+  checkLoginStatus();
+
+  // باقي الكود الخاص بمعالجة رد الاتصال من Google
   const urlParams = new URLSearchParams(window.location.search);
   const accessToken = urlParams.get("accessToken");
 

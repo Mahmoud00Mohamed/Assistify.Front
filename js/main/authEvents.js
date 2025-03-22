@@ -3,15 +3,26 @@
 // authEvents.js
 async function logoutUser() {
   try {
+    const loadingSwal = Swal.fire({
+      title: "جارٍ التحقق من الجلسة",
+      text: "يرجى الانتظار...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     await fetch(`${apiBaseUrl}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
-  } catch (error) {}
+
+    loadingSwal.close();
+  } catch (error) {
+    // لا حاجة لإغلاق Swal هنا لأنه سيتم استبداله
+  }
 
   clearSessionData();
-
-  //  تأكد من أن الصفحة مرئية قبل عرض الرسالة
   document.body.classList.add("visible");
 
   const result = await Swal.fire({
