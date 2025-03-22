@@ -20,21 +20,30 @@ function getTokenExpiration(token) {
 
 // جدولة تحديث التوكن قبل انتهائه بدقيقتين
 function scheduleTokenRefresh() {
-  if (!accessToken) return;
+  if (!accessToken) {
+    console.log("No accessToken to schedule refresh");
+    return;
+  }
 
-  var expirationTime = getTokenExpiration(accessToken);
-  if (!expirationTime) return;
+  const expirationTime = getTokenExpiration(accessToken);
+  if (!expirationTime) {
+    console.log("Could not determine expiration time for accessToken");
+    return;
+  }
 
-  var refreshTime = expirationTime - Date.now() - 120000; // تحديث قبل دقيقتين
+  const refreshTime = expirationTime - Date.now() - 120000; // تحديث قبل دقيقتين
+  console.log("Scheduling token refresh in:", refreshTime / 1000, "seconds");
 
   clearTimeout(refreshTimeout);
 
   if (refreshTime > 0) {
     refreshTimeout = setTimeout(() => {
       refreshTimeout = null;
+      console.log("Executing scheduled token refresh");
       refreshAccessToken();
     }, refreshTime);
   } else {
+    console.log("Token expired or about to expire, refreshing immediately");
     refreshAccessToken();
   }
 }
@@ -54,19 +63,25 @@ function refreshAccessToken(forceRefresh, retries = 3) {
   forceRefresh = forceRefresh || false;
   var expirationTime = getTokenExpiration(accessToken);
   if (!forceRefresh && expirationTime && expirationTime > Date.now()) {
+    console.log("Access token still valid, no refresh needed");
     return Promise.resolve(true);
   }
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000);
+
   return fetch(`${apiBaseUrl}/auth/refresh-token`, {
     method: "POST",
-    credentials: "include", // تأكد من وجود هذا
+    credentials: "include",
     signal: controller.signal,
   })
     .then((response) => {
       clearTimeout(timeoutId);
       if (!response.ok) {
-        console.log("Refresh token failed with status:", response.status);
+        console.log(
+          "Refresh token request failed with status:",
+          response.status
+        );
         if (retries > 0) {
           return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
             refreshAccessToken(forceRefresh, retries - 1)
@@ -78,13 +93,18 @@ function refreshAccessToken(forceRefresh, retries = 3) {
       return response.json();
     })
     .then((data) => {
-      if (data) {
+      if (data && data.accessToken) {
         accessToken = data.accessToken;
         localStorage.setItem("accessToken", accessToken);
+        console.log(
+          "New accessToken stored:",
+          accessToken.slice(0, 10) + "..."
+        );
         scheduleTokenRefresh();
-        console.log("Token refreshed successfully");
         return true;
       }
+      console.log("No accessToken in refresh response");
+      return false;
     })
     .catch((error) => {
       clearTimeout(timeoutId);
