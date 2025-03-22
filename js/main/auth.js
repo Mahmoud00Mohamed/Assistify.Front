@@ -19,6 +19,8 @@ function getTokenExpiration(token) {
 }
 
 // جدولة تحديث التوكن قبل انتهائه بدقيقتين
+let lastRefreshTime = 0; // تتبع آخر وقت تم فيه التحديث
+
 function scheduleTokenRefresh() {
   if (!accessToken) {
     console.log("No accessToken to schedule refresh");
@@ -31,20 +33,42 @@ function scheduleTokenRefresh() {
     return;
   }
 
-  const refreshTime = expirationTime - Date.now() - 120000; // تحديث قبل دقيقتين
+  const now = Date.now();
+  const refreshTime = expirationTime - now - 120000; // تحديث قبل دقيقتين
   console.log("Scheduling token refresh in:", refreshTime / 1000, "seconds");
 
   clearTimeout(refreshTimeout);
+
+  // منع التحديث المتكرر إذا تم التحديث مؤخرًا (خلال 5 دقائق)
+  if (now - lastRefreshTime < 5 * 60 * 1000) {
+    console.log("Skipping refresh: Too soon since last refresh");
+    return;
+  }
 
   if (refreshTime > 0) {
     refreshTimeout = setTimeout(() => {
       refreshTimeout = null;
       console.log("Executing scheduled token refresh");
-      refreshAccessToken();
+      refreshAccessToken().then(() => {
+        lastRefreshTime = Date.now(); // تحديث وقت آخر تحديث
+      });
     }, refreshTime);
+  } else if (expirationTime > now) {
+    console.log(
+      "Token still valid but refreshTime miscalculated, rescheduling"
+    );
+    refreshTimeout = setTimeout(() => {
+      refreshTimeout = null;
+      console.log("Executing scheduled token refresh (rescheduled)");
+      refreshAccessToken().then(() => {
+        lastRefreshTime = Date.now();
+      });
+    }, 1000); // إعادة جدولة بعد ثانية
   } else {
-    console.log("Token expired or about to expire, refreshing immediately");
-    refreshAccessToken();
+    console.log("Token expired, refreshing immediately");
+    refreshAccessToken().then(() => {
+      lastRefreshTime = Date.now();
+    });
   }
 }
 
@@ -125,17 +149,30 @@ async function initializeAuth() {
     !localStorage.getItem("accessToken") &&
     !document.cookie.includes("refreshToken")
   ) {
+    console.log("No tokens found, redirecting to login");
     window.location.href = "../authentication/Login.html";
     return Promise.resolve(false);
   }
 
+  // تحقق مما إذا كان التوكن لا يزال صالحًا قبل التحديث
+  const expirationTime = getTokenExpiration(
+    localStorage.getItem("accessToken")
+  );
+  if (expirationTime && expirationTime > Date.now() + 120000) {
+    console.log("Access token still valid, no need to refresh yet");
+    accessToken = localStorage.getItem("accessToken");
+    scheduleTokenRefresh();
+    return Promise.resolve(true);
+  }
+
   let serverAwake = await pingServer();
   if (!serverAwake) {
-    await new Promise((resolve) => setTimeout(resolve, 3000)); // الانتظار 3 ثوانٍ
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     serverAwake = await pingServer();
   }
 
   if (!serverAwake) {
+    console.log("Server not responding, logging out");
     logoutUser();
     return false;
   }
@@ -146,6 +183,7 @@ async function initializeAuth() {
   })
     .then((response) => {
       if (!response.ok) {
+        console.log("Initial refresh failed with status:", response.status);
         logoutUser();
         return false;
       }
@@ -155,12 +193,18 @@ async function initializeAuth() {
       if (data && data.accessToken) {
         accessToken = data.accessToken;
         localStorage.setItem("accessToken", accessToken);
+        console.log(
+          "Initialized with new accessToken:",
+          accessToken.slice(0, 10) + "..."
+        );
         scheduleTokenRefresh();
         return true;
       }
+      console.log("No accessToken in initial refresh response");
       return false;
     })
     .catch((error) => {
+      console.error("Error during initializeAuth:", error);
       logoutUser();
       return false;
     });
@@ -181,7 +225,15 @@ window.addEventListener("storage", function (event) {
 // إعادة تحميل الصفحة عند استرجاعها من الكاش
 window.addEventListener("pageshow", function (event) {
   if (event.persisted) {
-    window.location.reload();
+    console.log("Page loaded from cache, checking token validity");
+    const expirationTime = getTokenExpiration(accessToken);
+    if (expirationTime && expirationTime > Date.now() + 120000) {
+      console.log("Token still valid, no refresh needed");
+      scheduleTokenRefresh();
+    } else {
+      console.log("Token expired or about to expire, refreshing");
+      initializeAuth();
+    }
   }
 });
 function keepServerAwake() {
