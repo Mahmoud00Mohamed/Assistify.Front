@@ -124,7 +124,7 @@ function saveModalAsHTML() {
             padding: 8px;
             border-top: 1px solid #374151;
         ">
-            Saved from the site <a href="https://example.com" target="_blank" style="color: #60a5fa; text-decoration: none;">Assistify.com</a>
+            Saved from the site <a href="https://www.assistify.site" target="_blank" style="color: #60a5fa; text-decoration: none;">Assistify.com</a>
         </div>
     `;
   clonedModal.querySelector(".flex.flex-col").appendChild(branding);
@@ -150,6 +150,88 @@ function saveModalAsHTML() {
     }
   `;
 
+  // الـ CSS المخصص لـ showAlert
+  const alertStyles = `
+    .animated-border {
+      border-radius: 12px !important;
+      position: relative;
+      overflow: hidden;
+      max-width: 280px;
+      font-size: 15px;
+      padding: 10px 14px !important;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .animated-border::before {
+      content: '';
+      position: absolute;
+      top: -150%;
+      left: -150%;
+      width: 400%;
+      height: 400%;
+      background: radial-gradient(circle, rgba(0,255,204,0.6), rgba(0,179,255,0.3));
+      animation: rotateBorder 6s linear infinite;
+      filter: blur(10px);
+      opacity: 0.5;
+    }
+    .animated-border::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border-radius: 10px;
+    }
+    @keyframes rotateBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 480px) {
+      .animated-border {
+        max-width: 220px;
+        font-size: 13px;
+        padding: 8px 12px !important;
+      }
+    }
+  `;
+
+  // السكربت الذي يحتوي على SweetAlert2 و showAlert و copyDescription
+  const scriptContent = `
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function showAlert(message, type = "success") {
+        Swal.fire({
+          icon: type,
+          text: message,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2500,
+          background: "linear-gradient(135deg, #1e293b, #334155)",
+          color: "#fff",
+          customClass: { popup: "animated-border" },
+        });
+      }
+
+      function copyDescription() {
+        const descContainer = document.getElementById("review-task-desc");
+        const text = descContainer.innerText || descContainer.textContent;
+
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            showAlert("Copied successfully!", "success");
+          })
+          .catch(() => {
+            showAlert("Failed to copy description!", "error");
+          });
+      }
+    </script>
+  `;
+
   const fullHTML = `
         <!DOCTYPE html>
         <html lang="ar">
@@ -158,10 +240,12 @@ function saveModalAsHTML() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Task Review</title>
             <style>${styles}</style>
+            <style>${alertStyles}</style>
             <style>${overrideStyles}</style>
         </head>
         <body style="margin:0; background-color:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; height:100vh;">
             ${clonedModal.outerHTML}
+            ${scriptContent}
         </body>
         </html>
     `;
@@ -175,7 +259,6 @@ function saveModalAsHTML() {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  clonedModal.querySelectorAll("script").forEach((script) => script.remove());
 
   URL.revokeObjectURL(url);
 }
