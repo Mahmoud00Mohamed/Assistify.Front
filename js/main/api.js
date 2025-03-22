@@ -3,19 +3,20 @@
 // api.js
 function fetchWithAuth(url, options) {
   options = options || {};
-  options.credentials = "include";
+  options.credentials = "include"; // تأكد من أن هذا موجود دائمًا
   options.headers = options.headers || {};
-
   if (accessToken) {
     options.headers["Authorization"] = "Bearer " + accessToken;
   }
-
   return fetch(url, options)
     .then(async (response) => {
       if (response.status === 401) {
+        console.log("Received 401, attempting to refresh token");
         const refreshed = await refreshAccessToken(true);
-        if (!refreshed) return null; // إذا فشل التحديث، لا تعيد الطلب
-
+        if (!refreshed) {
+          console.log("Token refresh failed");
+          return null;
+        }
         options.headers["Authorization"] = "Bearer " + accessToken;
         return fetch(url, options);
       }
@@ -23,6 +24,6 @@ function fetchWithAuth(url, options) {
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-      throw error; // للسماح بمعالجة الأخطاء في مكان آخر إذا لزم الأمر
+      throw error;
     });
 }

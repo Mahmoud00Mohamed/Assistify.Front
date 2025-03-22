@@ -52,23 +52,21 @@ async function pingServer() {
 // تحديث التوكن مع إعادة المحاولة وtimeout
 function refreshAccessToken(forceRefresh, retries = 3) {
   forceRefresh = forceRefresh || false;
-
   var expirationTime = getTokenExpiration(accessToken);
   if (!forceRefresh && expirationTime && expirationTime > Date.now()) {
     return Promise.resolve(true);
   }
-
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثوانٍ
-
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
   return fetch(`${apiBaseUrl}/auth/refresh-token`, {
     method: "POST",
-    credentials: "include",
+    credentials: "include", // تأكد من وجود هذا
     signal: controller.signal,
   })
     .then((response) => {
       clearTimeout(timeoutId);
       if (!response.ok) {
+        console.log("Refresh token failed with status:", response.status);
         if (retries > 0) {
           return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
             refreshAccessToken(forceRefresh, retries - 1)
@@ -84,11 +82,13 @@ function refreshAccessToken(forceRefresh, retries = 3) {
         accessToken = data.accessToken;
         localStorage.setItem("accessToken", accessToken);
         scheduleTokenRefresh();
+        console.log("Token refreshed successfully");
         return true;
       }
     })
     .catch((error) => {
       clearTimeout(timeoutId);
+      console.error("Error refreshing token:", error);
       if (retries > 0 && error.name === "AbortError") {
         return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
           refreshAccessToken(forceRefresh, retries - 1)
@@ -164,3 +164,17 @@ window.addEventListener("pageshow", function (event) {
     window.location.reload();
   }
 });
+function keepServerAwake() {
+  setInterval(async () => {
+    try {
+      await fetch(`${apiBaseUrl}/auth/ping`, {
+        method: "GET",
+        credentials: "include",
+      });
+      console.log("Pinged server to keep it awake");
+    } catch (error) {
+      console.error("Error pinging server:", error);
+    }
+  }, 5 * 60 * 1000); // كل 5 دقائق
+}
+keepServerAwake();
