@@ -46,7 +46,12 @@
 
     <!-- Favicons -->
     <link rel="shortcut icon" href="/photo/logo.webp" type="image/x-icon" />
-    <link rel="icon" type="image/webp" sizes="192x192" href="/photo/logo.webp" />
+    <link
+      rel="icon"
+      type="image/webp"
+      sizes="192x192"
+      href="/photo/logo.webp"
+    />
 
     <!-- Inline Styles -->
     <style>
@@ -212,6 +217,20 @@
         }
       }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-GH38CDE11E"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-GH38CDE11E");
+    </script>
   </head>
   <body>
     <div class="auth-wrapper" id="authWrapper">
