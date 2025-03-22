@@ -86,7 +86,10 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "G-GH38CDE11E");
+      gtag("config", "G-GH38CDE11E", {
+        send_page_view: true,
+        page_path: window.location.pathname,
+      });
     </script>
   </head>
   <body>
