@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Metadata -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <meta
       http-equiv="Cache-Control"
@@ -10,6 +11,8 @@
     />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+
+    <!-- SEO -->
     <title>To Do List - Dashboard | Assistify</title>
     <meta
       name="description"
@@ -20,6 +23,8 @@
       content="to-do list, dashboard, task management, Assistify user, productivity"
     />
     <meta name="author" content="Assistify" />
+
+    <!-- Open Graph Meta Tags (For Social Media) -->
     <meta property="og:title" content="To Do List - Dashboard | Assistify" />
     <meta
       property="og:description"
@@ -31,6 +36,8 @@
     />
     <meta property="og:url" content="https://www.assistify.site/dashboard" />
     <meta property="og:type" content="website" />
+
+    <!-- Favicon -->
     <link rel="shortcut icon" href="/photo/logo.webp" type="image/x-icon" />
     <link
       rel="icon"
@@ -38,25 +45,31 @@
       sizes="192x192"
       href="/photo/logo.webp"
     />
+
+    <!-- External Stylesheets -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/default.min.css"
-    />
     <link rel="stylesheet" href="/Styles/libs/fonts-googleapis.css" />
     <link rel="stylesheet" href="/Styles/main-content.css" />
     <link rel="stylesheet" href="/Styles/Task.css" />
-    <link rel="stylesheet" href="/dist/output.css" />
+    <!-- <link rel="stylesheet" href="/dist/output.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css"
+    />
+
+    <!-- External Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script defer="defer" src="/js/main-content.js"></script>
-    <!-- Google tag (gtag.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <!-- Local Scripts -->
+    <script defer src="/js/main-content.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-GH38CDE11E"
@@ -67,13 +80,13 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-GH38CDE11E", {
         send_page_view: true,
         page_path: window.location.pathname,
       });
     </script>
   </head>
+
   <body class="text-gray-100">
     <div
       id="fixed-header"
@@ -373,6 +386,7 @@
                 class="leading-relaxed text-white overflow-x-auto"
               ></div>
               <button
+                id="copy-button"
                 class="absolute top-2 right-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold py-1 px-2 rounded transition"
                 onclick="copyDescription()"
               >

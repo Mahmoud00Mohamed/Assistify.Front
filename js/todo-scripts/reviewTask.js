@@ -8,32 +8,66 @@ function reviewTask(index) {
   const description = task.description || "No description available";
   const descContainer = document.getElementById("review-task-desc");
 
-  if (description.startsWith("```") && description.endsWith("```")) {
-    const codeContent = description.replace(/^```|```$/g, "");
-    descContainer.innerHTML = `<pre><code class="hljs">${escapeHtml(
-      codeContent
-    )}</code></pre>`;
-    descContainer.style.fontFamily = "monospace";
-  } else if (isMarkdown(description)) {
-    descContainer.innerHTML = marked.parse(description);
-    descContainer.style.fontFamily = "inherit";
-  } else {
-    descContainer.textContent = description;
-    descContainer.style.fontFamily = "inherit";
-  }
+  const hasCodeBlock = description.includes("```");
+  const hasHtmlTags = /<[^>]+>/.test(description);
 
-  document.querySelectorAll("pre code").forEach((block) => {
-    hljs.highlightElement(block);
-  });
+  if (hasHtmlTags) {
+    let codeContent = description;
+    if (hasCodeBlock) {
+      const codeMatch = description.match(/```[\s\S]*?```/g) || [];
+      codeContent = codeMatch.length > 0 ? codeMatch.join("\n") : description;
+      codeContent = codeContent
+        .replace(/```(\w+)?\n([\s\S]*?)```/g, "$2")
+        .trim();
+    }
+
+    descContainer.innerHTML = `
+      <div class="code-editor">
+        <div class="code-header">
+          <span class="code-title">Code</span>
+          <div class="code-controls">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+        </div>
+        <pre><code class="hljs">${escapeHtml(codeContent)}</code></pre>
+      </div>
+    `;
+
+    if (typeof hljs !== "undefined" && hljs.highlightElement) {
+      document.querySelectorAll("pre code").forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    }
+  } else if (isMarkdown(description)) {
+    descContainer.innerHTML = `
+      <div class="markdown-content">
+        ${marked.parse(description, { breaks: true, gfm: true })}
+      </div>
+    `;
+    if (typeof hljs !== "undefined") {
+      document.querySelectorAll("pre code").forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    } else {
+      console.error("Highlight.js is not loaded.");
+    }
+  } else {
+    descContainer.innerHTML = `
+      <div class="plain-text">
+        <p>${escapeHtml(description)}</p>
+      </div>
+    `;
+  }
 
   const tagsContainer = document.getElementById("review-task-tags");
   tagsContainer.innerHTML = "";
-
   if (task.tags && Array.isArray(task.tags) && task.tags.length > 0) {
     task.tags.forEach((tag) => {
       const tagElement = document.createElement("span");
       tagElement.className =
-        "bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded";
+        "bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded hover:bg-blue-700 transition";
       tagElement.textContent = tag;
       tagsContainer.appendChild(tagElement);
     });
@@ -41,12 +75,44 @@ function reviewTask(index) {
     tagsContainer.innerHTML = `<span class="text-gray-500 text-xs">No tags</span>`;
   }
 
-  // 👇 فتح المودال مع تأثير الانزلاق
+  // فتح المودال مع حماية من الإغلاق الفوري
   const modal = document.getElementById("review-modal");
   modal.classList.remove("hidden", "hide");
   modal.classList.add("show");
+
+  // إعادة تعيين معالج الحدث لمنع الإغلاق العرضي
+  modal.removeEventListener("click", handleModalClick); // إزالة المعالج القديم
+  modal.addEventListener("click", handleModalClick);
 }
 
+// دالة معالجة النقر
+function handleModalClick(event) {
+  const modal = document.getElementById("review-modal");
+  if (event.target === modal) {
+    // النقر على الخلفية فقط
+    closeReviewModal();
+  }
+  event.stopPropagation(); // منع انتشار الحدث
+}
+
+function closeReviewModal() {
+  const modal = document.getElementById("review-modal");
+  modal.classList.remove("show");
+  modal.classList.add("hide");
+  setTimeout(() => {
+    modal.classList.add("hidden");
+  }, 300);
+}
+
+// دالة escapeHtml المصححة
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 document.getElementById("review-modal").addEventListener("click", (event) => {
   if (event.target.id === "review-modal") {
     closeReviewModal();
@@ -79,26 +145,22 @@ function isMarkdown(text) {
   return mdIndicators.some((indicator) => text.includes(indicator));
 }
 
-function escapeHtml(unsafe) {
-  return unsafe.replace(/[&<>"']/g, function (m) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    }[m];
-  });
-}
-
 function copyDescription() {
   const descContainer = document.getElementById("review-task-desc");
   const text = descContainer.innerText || descContainer.textContent;
+  const copyButton = document.getElementById("copy-button");
 
   navigator.clipboard
     .writeText(text)
     .then(() => {
+      // تغيير نص الزر إلى "Copied"
+      copyButton.textContent = "Copied";
       showAlert("Copied successfully!", "success");
+
+      // إرجاع النص إلى "Copy" بعد ثانيتين (2000 مللي ثانية)
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 2500);
     })
     .catch(() => {
       showAlert("Failed to copy description!", "error");
@@ -124,7 +186,7 @@ function saveModalAsHTML() {
             padding: 8px;
             border-top: 1px solid #374151;
         ">
-            Saved from the site <a href="https://www.assistify.site" target="_blank" style="color: #60a5fa; text-decoration: none;">Assistify.com</a>
+            Saved from the site <a href="https://www.assistify.site" target="_blank" style="color: #60a5fa; text-decoration: none;">assistify.site</a>
         </div>
     `;
   clonedModal.querySelector(".flex.flex-col").appendChild(branding);
@@ -216,19 +278,27 @@ function saveModalAsHTML() {
         });
       }
 
-      function copyDescription() {
-        const descContainer = document.getElementById("review-task-desc");
-        const text = descContainer.innerText || descContainer.textContent;
+     function copyDescription() {
+  const descContainer = document.getElementById("review-task-desc");
+  const text = descContainer.innerText || descContainer.textContent;
+  const copyButton = document.getElementById("copy-button");
 
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {
-            showAlert("Copied successfully!", "success");
-          })
-          .catch(() => {
-            showAlert("Failed to copy description!", "error");
-          });
-      }
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      // تغيير نص الزر إلى "Copied"
+      copyButton.textContent = "Copied";
+      showAlert("Copied successfully!", "success");
+
+      // إرجاع النص إلى "Copy" بعد ثانيتين (2000 مللي ثانية)
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 2500);
+    })
+    .catch(() => {
+      showAlert("Failed to copy description!", "error");
+    });
+}
     </script>
   `;
 
@@ -239,6 +309,10 @@ function saveModalAsHTML() {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Task Review</title>
+             <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css"
+    />
             <style>${styles}</style>
             <style>${alertStyles}</style>
             <style>${overrideStyles}</style>
