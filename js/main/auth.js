@@ -2,8 +2,7 @@
 
 // auth.js
 
-// const apiBaseUrl = "https://api.assistify.site/api";
-const apiBaseUrl = "https://localhost:3002/api";
+const apiBaseUrl = "https://api.assistify.site/api";
 
 var accessToken = localStorage.getItem("accessToken");
 var refreshTimeout = null;
