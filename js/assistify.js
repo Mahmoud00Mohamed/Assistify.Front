@@ -48,3 +48,23 @@ gsap.from(".card-bg", {
   ease: "power4.out",
   scrollTrigger: { trigger: ".card-bg", start: "top 85%" },
 });
+document.addEventListener("DOMContentLoaded", async () => {
+  const lastPing = localStorage.getItem("lastPing");
+  const now = Date.now();
+
+  // إرسال الطلب فقط إذا لم يتم إرسال ping خلال الـ 5 دقائق الأخيرة
+  if (!lastPing || now - parseInt(lastPing) > 5 * 60 * 1000) {
+    try {
+      const response = await fetch("https://api.assistify.site/api/auth/ping", {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response.ok) {
+        localStorage.setItem("lastPing", now.toString());
+      }
+      // في حال فشل الطلب، لا نقوم بإظهار شيء في الواجهة
+    } catch (error) {
+      // نتجاهل الخطأ بصمت
+    }
+  }
+});
