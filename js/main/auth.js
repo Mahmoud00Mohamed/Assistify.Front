@@ -2,7 +2,7 @@
 
 // auth.js
 
-const apiBaseUrl = "https://api.assistify.site/api";
+const apiBaseUrl = "assistify-back.railway.internal/api";
 
 var accessToken = localStorage.getItem("accessToken");
 var refreshTimeout = null;
