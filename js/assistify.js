@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // إرسال الطلب فقط إذا لم يتم إرسال ping خلال الـ 5 دقائق الأخيرة
   if (!lastPing || now - parseInt(lastPing) > 5 * 60 * 1000) {
     try {
-      const response = await fetch("https://api.assistify.site/api/auth/ping", {
+      const response = await fetch("assistify-back.railway.internal/api/auth/ping", {
         method: "GET",
         credentials: "include",
       });
